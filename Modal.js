@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   Alert,
   Modal,
@@ -7,9 +7,9 @@ import {
   Pressable,
   View,
   TouchableOpacity,
-} from 'react-native';
-import Subscribe from './Subscribe';
-const LoginModal = props => {
+} from "react-native";
+
+const LoginMidal = (props) => {
   console.log(props.modalData);
   return (
     <View style={styles.centeredView}>
@@ -18,9 +18,10 @@ const LoginModal = props => {
         transparent={true}
         visible={props.modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
+          Alert.alert("Modal has been closed.");
           setModalVisible(!props.modalVisible);
-        }}>
+        }}
+      >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <View>
@@ -36,47 +37,50 @@ const LoginModal = props => {
             <View style={styles.btn}>
               <Pressable
                 style={[styles.button, styles.memberButtonClose]}
-                onPress={props.closeModal}>
+                onPress={props.closeModal}
+              >
                 <Text style={styles.textStyle}>예약</Text>
               </Pressable>
-              <View style={{padding: 10}}></View>
+              <View style={{ padding: 10 }}></View>
               <Pressable
                 style={[styles.button, styles.guestButtonClose]}
-                onPress={props.closeModal}>
+                onPress={props.closeModal}
+              >
                 <Text style={styles.textStyle}>닫기</Text>
               </Pressable>
             </View>
           </View>
         </View>
       </Modal>
-      {/* <Pressable
+      <Pressable
         style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}>
+        onPress={() => setModalVisible(true)}
+      >
         <Text style={styles.textStyle}>Show Modal</Text>
-      </Pressable> */}
+      </Pressable>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   centeredView: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 22,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
 
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
+    position: "absolute",
+    width: "100%",
+    height: "100%",
     // flex: 1,
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
 
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -97,60 +101,60 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: '#F194FF',
+    backgroundColor: "#F194FF",
   },
   memberButtonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: "#2196F3",
   },
   guestButtonClose: {
-    backgroundColor: 'darkgray',
+    backgroundColor: "darkgray",
   },
   textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
     paddingVertical: 10,
     paddingHorizontal: 15,
   },
   modalText: {
     marginBottom: 15,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 10,
   },
   selectMode: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   member: {
-    backgroundColor: '#2196F3',
+    backgroundColor: "#2196F3",
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 2,
     paddingVertical: 25,
   },
   memberText: {
-    color: 'white',
+    color: "white",
   },
   guest: {
-    backgroundColor: 'darkgray',
+    backgroundColor: "darkgray",
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     padding: 10,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 2,
   },
   guestText: {
-    color: 'white',
+    color: "white",
   },
   btn: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
-export default LoginModal;
+export default Modal;
