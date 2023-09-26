@@ -5,6 +5,9 @@ const indexStore = () => ({
   headerStore,
   footerStore,
   seatStore,
+  // store1,
+  // store2,
+  // ...
 });
 
 export default indexStore;

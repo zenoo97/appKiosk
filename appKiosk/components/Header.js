@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {Observer} from 'mobx-react';
+import {useObserver} from 'mobx-react';
 import indexStore from '../stores/IndexStore';
 
 // 요일을 한글로 변환
@@ -44,25 +44,21 @@ const Header = () => {
   }, []);
 
   const {headerStore} = indexStore();
-  return (
-    <Observer>
-      {() => (
-        <View style={styles.container}>
-          <View>
-            <Text style={styles.logoText}>
-              {headerStore.headerTitle === ''
-                ? '브로제이 골프'
-                : headerStore.headerTitle}
-            </Text>
-          </View>
-          <View style={styles.dateView}>
-            <Text style={styles.date}>{dateString}</Text>
-            <Text style={styles.time}>{timeString}</Text>
-          </View>
-        </View>
-      )}
-    </Observer>
-  );
+  return useObserver(() => (
+    <View style={styles.container}>
+      <View>
+        <Text style={styles.logoText}>
+          {headerStore.headerTitle === ''
+            ? '브로제이 골프'
+            : headerStore.headerTitle}
+        </Text>
+      </View>
+      <View style={styles.dateView}>
+        <Text style={styles.date}>{dateString}</Text>
+        <Text style={styles.time}>{timeString}</Text>
+      </View>
+    </View>
+  ));
 };
 
 export default Header;

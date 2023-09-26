@@ -1,9 +1,8 @@
 import Footer from '../components/Footer';
 import React from 'react';
 import indexStore from '../stores/IndexStore';
-import {Observer} from 'mobx-react';
 const FooterContainer = () => {
   const {footerStore} = indexStore();
-  return <Observer>{() => <Footer footerStore={footerStore} />}</Observer>;
+  return <Footer footerStore={footerStore} />;
 };
 export default FooterContainer;
