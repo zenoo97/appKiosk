@@ -5,6 +5,8 @@ const FooterStore = observable({
   changeBtn: false,
   footerBtnStatus: false,
 
+  closeTe: -1,
+
   onBtn() {
     this.changeBtn = true;
   },
@@ -17,6 +19,7 @@ const FooterStore = observable({
 
   onReserveBtn() {
     this.reserveBtn = true;
+    this.closeTe = -1;
   },
   offReserveBtn() {
     this.reserveBtn = false;
