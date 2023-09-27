@@ -2,6 +2,7 @@ import {observable} from 'mobx';
 
 const FooterStore = observable({
   // 타석 눌렀을 때 예약 버튼 활성화
+
   changeBtn: false,
   footerBtnStatus: false,
 
@@ -19,7 +20,6 @@ const FooterStore = observable({
 
   onReserveBtn() {
     this.reserveBtn = true;
-    this.closeTe = -1;
   },
   offReserveBtn() {
     this.reserveBtn = false;

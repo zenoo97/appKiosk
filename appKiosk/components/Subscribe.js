@@ -14,7 +14,7 @@ import produce from 'immer';
 
 const Subscribe = props => {
   const {footerStore, seatStore} = indexStore();
-  const {modalData, resetSelectedSeatIndex} = props;
+  const {modalData} = props;
   // console.log(modalData.station_num + '번 타석 선택');
   const offReserveBtn = () => {
     footerStore.offReserveBtn();
@@ -85,7 +85,7 @@ const Subscribe = props => {
                         },
                       ]}
                       onPress={() => itemHandler(index)}>
-                      <Text>{item.name}</Text>
+                      <Text>{item.name + '초'}</Text>
                     </TouchableOpacity>
                   ))}
                 </View>

@@ -154,11 +154,7 @@ const Main = ({seatStore, footerStore}) => {
             ),
           )}
           {footerStore.reserveBtn ? (
-            <Subscribe
-              modalData={modalData}
-              seatStore={seatStore}
-              resetSelectedSeatIndex={resetSelectedSeatIndex}
-            />
+            <Subscribe modalData={modalData} seatStore={seatStore} />
           ) : null}
         </View>
       )}

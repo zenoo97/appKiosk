@@ -19,7 +19,7 @@ const Countdown = ({useTime, seatData}) => {
 
   return (
     <Text style={styles.remainingTimeText}>
-      {remainingTime > 0 ? `${useTime} 초` : ''}
+      {remainingTime > 0 ? `${useTime} 초 남음` : ''}
     </Text>
   );
 };

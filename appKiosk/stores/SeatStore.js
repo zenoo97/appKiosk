@@ -2,7 +2,6 @@ import {observable, toJS} from 'mobx';
 import {produce} from 'immer';
 
 const SeatStore = observable({
-  isSelected: 4,
   useStatus: {
     emptySeat: [],
     notAvailable: [],
@@ -68,6 +67,7 @@ const SeatStore = observable({
     ],
   },
 
+  isSelectedSeat: 1,
   seatUpdate(seatStatus, seatNum, useTime) {
     this.seatDataList = produce(toJS(this.seatDataList), draft => {
       draft.station_info_list[seatNum - 1].useTime += useTime;
@@ -95,6 +95,7 @@ const SeatStore = observable({
     });
     console.log(this.seatDataList['station_info_list']);
   },
+  seatReset() {},
 });
 
 export default SeatStore;
