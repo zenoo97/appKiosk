@@ -12,7 +12,7 @@ import indexStore from '../stores/IndexStore';
 import {Observer} from 'mobx-react';
 
 const Subscribe = props => {
-  const {footerStore} = indexStore();
+  const {footerStore, seatStore} = indexStore();
   const {modalData} = props;
   console.log(modalData.station_num + '번 타석 선택');
   const offReserveBtn = () => {
@@ -23,25 +23,36 @@ const Subscribe = props => {
   const item = [
     {
       id: 1,
-      name: '30분',
+      name: 3,
     },
     {
       id: 2,
-      name: '60분',
+      name: 6,
     },
     {
       id: 3,
-      name: '120분',
+      name: 12,
     },
   ];
   const itemHandler = index => {
-    console.log(index);
+    console.log(item[index].name + ' 이용권 선택');
     if (selectedItemIndex === index) {
       setSelectedItemIndex(-1); // 같은 항목을 다시 클릭하면 취소
     } else {
       setSelectedItemIndex(index); // 클릭한 항목의 인덱스를 업데이트
       // 클릭 시
     }
+  };
+  const reserveHandler = selectedItemIndex => {
+    console.log(`${modalData.station_num}번 타석 예약이 되었습니다.`);
+    console.log(`${item[selectedItemIndex].name} 이용권 확정`);
+    seatStore.seatUpdate(
+      modalData.status,
+      modalData.station_num,
+      item[selectedItemIndex].name,
+    );
+    console.log(item[selectedItemIndex].name + ' 이용권 선택');
+    footerStore.offBtn();
   };
   return (
     <Observer>
@@ -84,7 +95,10 @@ const Subscribe = props => {
                       styles.buttonClose,
                       {backgroundColor: '#fa6402'},
                     ]}
-                    onPress={() => footerStore.offReserveBtn()}>
+                    onPress={() => {
+                      reserveHandler(selectedItemIndex);
+                      footerStore.offReserveBtn();
+                    }}>
                     <Text style={[styles.textStyle, {color: 'white'}]}>
                       예약하기
                     </Text>

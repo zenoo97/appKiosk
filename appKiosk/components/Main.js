@@ -1,83 +1,84 @@
-import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {SvgUri} from 'react-native-svg';
 // import Modal from './Modal'; // 팝업창 컴포넌트 import
 import Subscribe from './Subscribe';
 import {Observer} from 'mobx-react';
+import indexStore from '../stores/IndexStore';
+import CountdownTimer from './CountdownTimer';
 
 // 예약가능 #fd6b00
 // 사용중 #ffffff
 // 예약불가  #6f6f6f
-const data = {
-  area_info: {
-    area_name: 'Area.svg',
-    area_width: '1440',
-    area_height: '1024',
-  },
-  station_info_list: [
-    {
-      station_num: '1',
-      x_coordinate: '674',
-      y_coordinate: '300',
-      station_width: '110',
-      station_height: '62',
-      station_color: '#D9D9D9',
-      status: 'beInUse', // 사용중
-    },
-    {
-      station_num: '2',
-      x_coordinate: '821',
-      y_coordinate: '300',
-      station_width: '110',
-      station_height: '62',
-      station_color: '#D9D9D9',
-      status: 'notAvailable', // 예약불가
-    },
-    {
-      station_num: '3',
-      x_coordinate: '968',
-      y_coordinate: '430',
-      station_width: '110',
-      station_height: '62',
-      station_color: '#D9D9D9',
-      status: 'reservationAvailable', // 예약가능
-    },
-    {
-      station_num: '4',
-      x_coordinate: '944',
-      y_coordinate: '560',
-      station_width: '110',
-      station_height: '62',
-      station_color: '#D9D9D9',
-      status: 'beInUse', // 사용중
-    },
-    {
-      station_num: '5',
-      x_coordinate: '756',
-      y_coordinate: '453',
-      station_width: '110',
-      station_height: '62',
-      station_color: '#D9D9D9',
-      status: 'notAvailable', // 예약불가
-    },
-  ],
-};
+
+// emptySeat : 예약가능 -> 빈타석
+// -> 바로 대기가능 상태로
+// notAvailable: 예약불가
+// reservationAvailable : 대기가능 -> 이용중이라서 대기로
+// const data = {
+//   area_info: {
+//     area_name: 'Area.svg',
+//     area_width: '1440',
+//     area_height: '1024',
+//   },
+//   station_info_list: [
+//     {
+//       station_num: '1',
+//       x_coordinate: '674',
+//       y_coordinate: '300',
+//       station_width: '110',
+//       station_height: '62',
+//       station_color: '#D9D9D9',
+//       status: 'emptySeat', //
+//     },
+//     {
+//       station_num: '2',
+//       x_coordinate: '821',
+//       y_coordinate: '300',
+//       station_width: '110',
+//       station_height: '62',
+//       station_color: '#D9D9D9',
+//       status: 'emptySeat', // 예약불가
+//     },
+//     {
+//       station_num: '3',
+//       x_coordinate: '968',
+//       y_coordinate: '430',
+//       station_width: '110',
+//       station_height: '62',
+//       station_color: '#D9D9D9',
+//       status: 'reservationAvailable', // 예약가능
+//     },
+//     {
+//       station_num: '4',
+//       x_coordinate: '944',
+//       y_coordinate: '560',
+//       station_width: '110',
+//       station_height: '62',
+//       station_color: '#D9D9D9',
+//       status: 'emptySeat', // 사용중
+//     },
+//     {
+//       station_num: '5',
+//       x_coordinate: '756',
+//       y_coordinate: '453',
+//       station_width: '110',
+//       station_height: '62',
+//       station_color: '#D9D9D9',
+//       status: 'notAvailable', // 예약불가
+//     },
+//   ],
+// };
 const statusColor = {
   reservationAvailable: '#fd6b00',
-  beInUse: '#ffffff',
+  emptySeat: '#ffffff',
   notAvailable: '#6f6f6f',
 };
-const Main = ({seatStore, footerStore}) => {
+const Main = ({footerStore}) => {
   const [seatAreaX, setSeatAreaX] = useState(0); // area에 y값
   const [seatAreaY, setSeatAreaY] = useState(0); // area에 y값
   const [selectedSeatIndex, setSelectedSeatIndex] = useState(-1);
-
+  const {seatStore} = indexStore();
   const onLayout = e => {
     const {layout} = e.nativeEvent; // layout 추출
     setSeatAreaX(layout.x);
@@ -88,7 +89,8 @@ const Main = ({seatStore, footerStore}) => {
   const [modalData, setModalData] = useState(null);
   const clickSeat = (index, seatData) => {
     setModalData(seatData);
-
+    if (footerStore.changeBtn === false) {
+    }
     if (selectedSeatIndex === index) {
       setSelectedSeatIndex(-1); // 같은 항목을 다시 클릭하면 취소
       footerStore.offBtn();
@@ -109,7 +111,7 @@ const Main = ({seatStore, footerStore}) => {
             uri="https://broj.s3.ap-northeast-2.amazonaws.com/jgroup/1234/station-area/Area.svg"
             onLayout={onLayout}
           />
-          {data.station_info_list.map((seatData, index) => (
+          {seatStore.seatDataList.station_info_list.map((seatData, index) => (
             <TouchableOpacity
               key={index} // Add a unique key
               onPress={() => clickSeat(index, seatData)} // TouchableOpacity 클릭 시 팝업창 열림
@@ -124,7 +126,7 @@ const Main = ({seatStore, footerStore}) => {
                 borderRadius: 10,
                 padding: 10,
                 borderColor:
-                  selectedSeatIndex === index ? '#fd6d22' : '#000000', // 선택된 항목일 때 다른 색상
+                  selectedSeatIndex === index ? '#dc2e76' : '#000000', // 선택된 항목일 때 다른 색상
               }}
               disabled={seatData.status === 'notAvailable' ? true : false}>
               {seatData.status === 'notAvailable' ? (
@@ -134,7 +136,13 @@ const Main = ({seatStore, footerStore}) => {
               ) : (
                 <View style={styles.infoText}>
                   <Text style={styles.seatNumText}>{index + 1} 번</Text>
-                  <Text style={styles.remainingTimeText}>1:30분 남음</Text>
+                  {/* <Text style={styles.remainingTimeText}>
+                    {seatData.useTime}
+                  </Text> */}
+                  <View style={styles.timerContainer}>
+                    <Text>{seatData.useTime}</Text>
+                    <CountdownTimer initialSeconds={seatData.useTime} />
+                  </View>
                 </View>
               )}
             </TouchableOpacity>
@@ -149,6 +157,11 @@ const Main = ({seatStore, footerStore}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   container: {
     backgroundColor: 'black',
     alignItems: 'center',
