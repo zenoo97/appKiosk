@@ -3,9 +3,7 @@ import {produce} from 'immer';
 
 const SeatStore = observable({
   useStatus: {
-    emptySeat: [],
-    notAvailable: [],
-    reservationAvailable: [],
+    station_one: {},
   },
   seatDataList: {
     area_info: {
@@ -41,7 +39,7 @@ const SeatStore = observable({
         station_width: '110',
         station_height: '62',
         station_color: '#D9D9D9',
-        status: 'reservationAvailable',
+        status: 'emptySeat',
         useTime: 0,
       },
       {
@@ -94,7 +92,6 @@ const SeatStore = observable({
     });
     console.log(this.seatDataList['station_info_list']);
   },
-  seatReset() {},
 });
 
 export default SeatStore;

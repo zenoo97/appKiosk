@@ -5,21 +5,30 @@ import {Observer} from 'mobx-react';
 
 const Countdown = ({useTime, seatData}) => {
   const {seatStore} = indexStore();
-  const [remainingTime, setRemainingTime] = useState(useTime);
+  const [remainingMinutes, setRemainingMinutes] = useState(
+    Math.floor(useTime / 60),
+  );
+  const [remainingSeconds, setRemainingSeconds] = useState(useTime % 60);
 
   useEffect(() => {
     if (useTime > 0) {
       const timer = setInterval(() => {
         seatStore.timeMinus(seatData, seatData.station_num);
+        if (remainingSeconds > 0) {
+          setRemainingSeconds(remainingSeconds - 1);
+        } else if (remainingMinutes > 0) {
+          setRemainingMinutes(remainingMinutes - 1);
+          setRemainingSeconds(59);
+        }
       }, 1000);
 
       return () => clearInterval(timer);
     }
-  }, [useTime]);
+  }, [useTime, remainingMinutes, remainingSeconds, seatData, seatStore]);
 
   return (
     <Text style={styles.remainingTimeText}>
-      {remainingTime > 0 ? `${useTime} 초 남음` : ''}
+      {useTime > 0 ? `${remainingMinutes}분 ${remainingSeconds}초` : ''}
     </Text>
   );
 };
@@ -30,5 +39,3 @@ const styles = StyleSheet.create({
   },
 });
 export default Countdown;
-
-// 9초로 넘김 (props)

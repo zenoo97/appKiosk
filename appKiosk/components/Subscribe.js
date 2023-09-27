@@ -24,15 +24,15 @@ const Subscribe = props => {
   const item = [
     {
       id: 1,
-      name: 3,
+      name: 340,
     },
     {
       id: 2,
-      name: 6,
+      name: 500,
     },
     {
       id: 3,
-      name: 12,
+      name: 600,
     },
   ];
   const itemHandler = index => {
