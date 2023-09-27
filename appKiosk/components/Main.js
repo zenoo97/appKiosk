@@ -104,7 +104,6 @@ const Main = ({seatStore, footerStore}) => {
   const resetSelectedSeatIndex = () => {
     setSelectedSeatIndex(-1);
   };
-
   return (
     <Observer>
       {() => (
@@ -154,7 +153,11 @@ const Main = ({seatStore, footerStore}) => {
             ),
           )}
           {footerStore.reserveBtn ? (
-            <Subscribe modalData={modalData} seatStore={seatStore} />
+            <Subscribe
+              modalData={modalData}
+              seatStore={seatStore}
+              resetSelectedSeatIndex={resetSelectedSeatIndex}
+            />
           ) : null}
         </View>
       )}

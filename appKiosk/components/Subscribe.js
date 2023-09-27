@@ -47,6 +47,7 @@ const Subscribe = props => {
   const reserveHandler = selectedItemIndex => {
     // console.log(`${modalData.station_num}번 타석 예약이 되었습니다.`);
     // console.log(`${item[selectedItemIndex].name} 이용권 확정`);
+    props.resetSelectedSeatIndex();
     seatStore.seatUpdate(
       modalData.status,
       modalData.station_num,

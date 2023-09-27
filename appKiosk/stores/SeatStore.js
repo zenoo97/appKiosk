@@ -67,7 +67,6 @@ const SeatStore = observable({
     ],
   },
 
-  isSelectedSeat: 1,
   seatUpdate(seatStatus, seatNum, useTime) {
     this.seatDataList = produce(toJS(this.seatDataList), draft => {
       draft.station_info_list[seatNum - 1].useTime += useTime;

@@ -6,8 +6,6 @@ const FooterStore = observable({
   changeBtn: false,
   footerBtnStatus: false,
 
-  closeTe: -1,
-
   onBtn() {
     this.changeBtn = true;
   },
@@ -17,7 +15,7 @@ const FooterStore = observable({
 
   // 예약 버튼
   reserveBtn: false,
-
+  isSelectedSeat: -1,
   onReserveBtn() {
     this.reserveBtn = true;
   },
