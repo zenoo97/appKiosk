@@ -4,6 +4,7 @@ import {StyleSheet, View} from 'react-native';
 import HeaderContainer from './container/HeaderContainer';
 import FooterContainer from './container/FooterContainer';
 import MainContainer from './container/MainContainer';
+import Subscribe from './components/Subscribe';
 
 function App() {
   return (
