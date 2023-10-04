@@ -4,7 +4,8 @@ import indexStore from '../stores/IndexStore';
 import {Observer} from 'mobx-react';
 
 const HeaderContainer = () => {
-  return <Observer>{() => <Header />}</Observer>;
+  const {headerStore} = indexStore();
+  return <Observer>{() => <Header headerStore={headerStore} />}</Observer>;
 };
 
 export default HeaderContainer;

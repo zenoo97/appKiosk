@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Observer} from 'mobx-react';
-import indexStore from '../stores/IndexStore';
+import HeaderTitleModal from './HeaderTitleModal';
 
 // 요일을 한글로 변환
-const Header = () => {
+const Header = ({headerStore}) => {
   const weekday = ['일', '월', '화', '수', '목', '금', '토'];
   const [dateString, setDateString] = useState('');
   const [timeString, setTimeString] = useState('');
@@ -42,23 +42,28 @@ const Header = () => {
       clearInterval(intervalId);
     };
   }, []);
-
-  const {headerStore} = indexStore();
+  // const {titleModalStatus, onTitleModal, offTitleModal} = headerStore;
+  const titleModalHandler = () => {
+    if (headerStore.titleModalStatus === false) {
+      headerStore.onTitleModal();
+    }
+  };
   return (
     <Observer>
       {() => (
         <View style={styles.container}>
-          <View>
+          <TouchableOpacity onPress={titleModalHandler}>
             <Text style={styles.logoText}>
               {headerStore.headerTitle === ''
                 ? '브로제이 골프'
                 : headerStore.headerTitle}
             </Text>
-          </View>
+          </TouchableOpacity>
           <View style={styles.dateView}>
             <Text style={styles.date}>{dateString}</Text>
             <Text style={styles.time}>{timeString}</Text>
           </View>
+          {headerStore.titleModalStatus ? <HeaderTitleModal /> : null}
         </View>
       )}
     </Observer>
