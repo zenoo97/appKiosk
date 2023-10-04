@@ -29,10 +29,10 @@ const HeaderTitleModal = () => {
               <View style={styles.modalView}>
                 <View style={styles.titleInfo}>
                   <Text style={styles.titleInfoText}>
-                    mac address : 12:3d:as:sd
+                    mac address : 1v:3d:3a:2d
                   </Text>
                   <Text style={styles.titleInfoText}>
-                    IP 주소: 141.231.232{' '}
+                    IP 주소: 168.231.232{' '}
                   </Text>
                   <Text style={styles.titleInfoText}>현재 버전: 5.0.3.38</Text>
                   <Text style={styles.titleInfoText}>

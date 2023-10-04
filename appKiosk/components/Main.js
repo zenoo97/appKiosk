@@ -118,16 +118,17 @@ const Main = ({seatStore, footerStore}) => {
                 key={index} // Add a unique key
                 onPress={() => clickSeat(index, seatData)} // TouchableOpacity 클릭 시 팝업창 열림
                 style={{
-                  width: parseInt(seatData.station_width) + 13,
-                  height: parseInt(seatData.station_height) + 13,
+                  width: parseInt(seatData.station_width) + 20,
+                  height: parseInt(seatData.station_height) + 20,
                   backgroundColor: statusColor[seatData.status],
                   position: 'absolute',
                   left: parseInt(seatData.x_coordinate) + seatAreaX,
                   top: parseInt(seatData.y_coordinate) + seatAreaY,
                   borderWidth: 3,
                   borderRadius: 10,
-                  padding: 10,
                   borderColor: selectedSeatIndex === index ? 'blue' : '#000000', // 선택된 항목일 때 다른 색상
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
                 disabled={seatData.status === 'notAvailable' ? true : false}>
                 {seatData.status === 'notAvailable' ? (
@@ -181,6 +182,10 @@ const styles = StyleSheet.create({
   notAvailableText: {
     fontSize: 20,
     color: 'white',
+  },
+  infoText: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
