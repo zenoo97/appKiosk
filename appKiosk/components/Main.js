@@ -71,7 +71,7 @@ import Countdown from './Countdown';
 // };
 const statusColor = {
   reservationAvailable: '#fd6b00',
-  beInUse: '#ffffff',
+  emptySeat: '#fafafa',
   notAvailable: '#6f6f6f',
 };
 const Main = ({seatStore, footerStore}) => {
@@ -118,8 +118,8 @@ const Main = ({seatStore, footerStore}) => {
                 key={index} // Add a unique key
                 onPress={() => clickSeat(index, seatData)} // TouchableOpacity 클릭 시 팝업창 열림
                 style={{
-                  width: parseInt(seatData.station_width),
-                  height: parseInt(seatData.station_height),
+                  width: parseInt(seatData.station_width) + 13,
+                  height: parseInt(seatData.station_height) + 13,
                   backgroundColor: statusColor[seatData.status],
                   position: 'absolute',
                   left: parseInt(seatData.x_coordinate) + seatAreaX,

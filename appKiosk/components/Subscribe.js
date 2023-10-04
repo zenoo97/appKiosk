@@ -23,16 +23,16 @@ const Subscribe = props => {
   const [selectedItemIndex, setSelectedItemIndex] = useState(-1);
   const item = [
     {
-      id: 1,
-      name: 6,
+      id: '15분',
+      name: 900,
     },
     {
-      id: 2,
-      name: 12,
+      id: '30분',
+      name: 1800,
     },
     {
-      id: 3,
-      name: 18,
+      id: '60분',
+      name: 3600,
     },
   ];
   const itemHandler = index => {
@@ -86,7 +86,7 @@ const Subscribe = props => {
                         },
                       ]}
                       onPress={() => itemHandler(index)}>
-                      <Text>{item.name + '초'}</Text>
+                      <Text>{item.id}</Text>
                     </TouchableOpacity>
                   ))}
                 </View>

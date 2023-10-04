@@ -1,46 +1,56 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {StyleSheet, Text} from 'react-native';
 import indexStore from '../stores/IndexStore';
 import {Observer} from 'mobx-react';
 
 const Countdown = ({seatData}) => {
   const {seatStore} = indexStore();
-  const [remainingMinutes, setRemainingMinutes] = useState(
-    Math.floor(seatData.useTime / 60),
-  );
-  const [remainingSeconds, setRemainingSeconds] = useState(
-    seatData.useTime % 60,
-  );
+  const [remainingTime, setRemainingTime] = useState(seatData.useTime);
+  const requestRef = useRef();
+  const startTimeRef = useRef();
 
   useEffect(() => {
-    if (seatData.useTime > 0) {
-      const timer = setInterval(() => {
+    const animate = time => {
+      if (!startTimeRef.current) {
+        startTimeRef.current = time;
+      }
+      const elapsedTime = time - startTimeRef.current;
+
+      if (elapsedTime >= 1000) {
         seatStore.timeMinus(seatData, seatData.station_num);
-        if (remainingSeconds > 0) {
-          setRemainingSeconds(remainingSeconds - 1);
-        } else if (remainingMinutes > 0) {
-          setRemainingMinutes(remainingMinutes - 1);
-          setRemainingSeconds(59);
-        }
-      }, 1000);
+        setRemainingTime(prevTime => prevTime - 1);
+        startTimeRef.current = time;
+      }
 
-      return () => clearInterval(timer);
+      if (remainingTime > 0) {
+        requestRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    if (remainingTime > 0) {
+      requestRef.current = requestAnimationFrame(animate);
     }
-  }, [remainingMinutes, remainingSeconds, seatData, seatStore]);
 
-  // useTime이 변경될 때마다 남은 시간을 업데이트
+    return () => {
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+      }
+    };
+  }, [remainingTime, seatData, seatStore]);
+
   useEffect(() => {
-    setRemainingMinutes(Math.floor(seatData.useTime / 60));
-    setRemainingSeconds(seatData.useTime % 60);
+    // useTime이 변경될 때마다 남은 시간을 업데이트
+    setRemainingTime(seatData.useTime);
   }, [seatData.useTime]);
+
+  const minutes = Math.floor(remainingTime / 60);
+  const seconds = remainingTime % 60;
 
   return (
     <Observer>
       {() => (
         <Text style={styles.remainingTimeText}>
-          {seatData.useTime > 0
-            ? `${remainingMinutes}분 ${remainingSeconds}초`
-            : ''}
+          {remainingTime > 0 ? `${minutes}분 ${seconds}초` : ''}
         </Text>
       )}
     </Observer>

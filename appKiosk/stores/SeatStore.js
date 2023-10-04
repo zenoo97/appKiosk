@@ -2,9 +2,7 @@ import {observable, toJS} from 'mobx';
 import {produce} from 'immer';
 
 const SeatStore = observable({
-  useStatus: {
-    station_one: {},
-  },
+  useStatus: {},
   seatDataList: {
     area_info: {
       area_name: 'Area.svg',
