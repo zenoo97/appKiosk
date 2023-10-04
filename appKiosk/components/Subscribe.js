@@ -23,16 +23,16 @@ const Subscribe = props => {
   const [selectedItemIndex, setSelectedItemIndex] = useState(-1);
   const item = [
     {
-      id: '15분',
-      name: 900,
+      id: '15초',
+      name: 15,
     },
     {
-      id: '30분',
-      name: 1800,
+      id: '30초',
+      name: 30,
     },
     {
-      id: '60분',
-      name: 3600,
+      id: '60초',
+      name: 60,
     },
   ];
   const itemHandler = index => {
@@ -44,12 +44,7 @@ const Subscribe = props => {
       // 클릭 시
     }
   };
-  const alertMessageStyle = {
-    fontSize: 30, // 원하는 글꼴 크기로 설정
-    // 추가 스타일을 여기에 적용할 수 있습니다.
-    width: 100,
-    height: 100,
-  };
+
   const reserveHandler = selectedItemIndex => {
     // console.log(`${modalData.station_num}번 타석 예약이 되었습니다.`);
     // console.log(`${item[selectedItemIndex].name} 이용권 확정`);
@@ -64,16 +59,11 @@ const Subscribe = props => {
       footerStore.offBtn();
       offReserveBtn();
     } catch {
-      Alert.alert(
-        '',
-        '아이템을 선택해주세요.',
-        [
-          {
-            text: '확인',
-          },
-        ],
-        {messageStyle: alertMessageStyle},
-      );
+      Alert.alert('', '이용권을 선택해주세요.', [
+        {
+          text: '확인',
+        },
+      ]);
     }
   };
   return (
