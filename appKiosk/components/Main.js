@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Pressable,
   View,
 } from 'react-native';
 import {SvgUri} from 'react-native-svg';
@@ -96,7 +97,6 @@ const Main = ({seatStore, footerStore}) => {
     } else {
       setSelectedSeatIndex(index); // 클릭한 항목의 인덱스를 업데이트
       footerStore.onBtn();
-
       // 클릭 시
     }
     // 클릭 시 실행
@@ -114,7 +114,7 @@ const Main = ({seatStore, footerStore}) => {
           />
           {seatStore.seatDataList['station_info_list'].map(
             (seatData, index) => (
-              <TouchableOpacity
+              <Pressable
                 key={index} // Add a unique key
                 onPress={() => clickSeat(index, seatData)} // TouchableOpacity 클릭 시 팝업창 열림
                 style={{
@@ -149,7 +149,7 @@ const Main = ({seatStore, footerStore}) => {
                     )}
                   </View>
                 )}
-              </TouchableOpacity>
+              </Pressable>
             ),
           )}
           {footerStore.reserveBtn ? (

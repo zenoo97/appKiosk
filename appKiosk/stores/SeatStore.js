@@ -1,8 +1,10 @@
 import {observable, toJS} from 'mobx';
 import {produce} from 'immer';
 
+// emptyseat : 빈타석
+// reservationAvailable : 이용중인데 예약 가능한 경우
+// notAvailable: 이용불가
 const SeatStore = observable({
-  useStatus: {},
   seatDataList: {
     area_info: {
       area_name: 'Area.svg',
@@ -61,6 +63,11 @@ const SeatStore = observable({
         useTime: 0,
       },
     ],
+    useStatus: {
+      emptyseat: [],
+      reservationAvailable: [],
+      notAvailable: [],
+    },
   },
 
   seatUpdate(seatStatus, seatNum, useTime) {
@@ -69,10 +76,15 @@ const SeatStore = observable({
 
       if (seatStatus === 'emptySeat') {
         draft.station_info_list[seatNum - 1].status = 'reservationAvailable';
+        draft.useStatus['reservationAvailable'].push({seatNum, useTime});
+      } else if (seatStatus === 'reservationAvailable') {
+        draft.useStatus['reservationAvailable'].push({seatNum, useTime});
       }
+      console.log(draft.useStatus);
     });
-    console.log(this.seatDataList['station_info_list']);
+    // console.log(this.seatDataList['station_info_list']);
   },
+
   timeMinus(seatData, seatNum) {
     this.seatDataList = produce(toJS(this.seatDataList), draft => {
       draft.station_info_list[seatNum - 1].useTime -= 1;
