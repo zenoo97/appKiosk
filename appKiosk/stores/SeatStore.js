@@ -1,9 +1,8 @@
 import {observable, toJS} from 'mobx';
 import {produce} from 'immer';
 
-// emptyseat : 빈타석
-// reservationempty : 이용중인데 예약 가능한 경우
-// notempty: 이용불가
+// empty : 빈타석
+// used : 이용중
 // seatDataList: {
 //     area_info: {
 //       area_name: 'Area.svg',
