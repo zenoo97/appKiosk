@@ -41,11 +41,7 @@ const HeaderTitleModal = () => {
                 </View>
                 <View style={styles.btn}>
                   <Pressable
-                    style={[
-                      styles.button,
-                      styles.buttonClose,
-                      {backgroundColor: 'darkgrey'},
-                    ]}
+                    style={styles.btnClose}
                     onPress={() => headerStore.offTitleModal()}>
                     <Text style={[styles.textStyle, {color: 'black'}]}>
                       닫기
@@ -71,7 +67,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
-    // backgroundColor: 'red',
   },
   titleInfo: {
     paddingHorizontal: 10,
@@ -95,24 +90,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  btn: {
-    flexDirection: 'row',
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
+
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    padding: 10,
   },
   modalText: {
     marginBottom: 15,
@@ -129,6 +112,10 @@ const styles = StyleSheet.create({
     padding: 30,
     borderRadius: 5,
     margin: 10,
+  },
+  btnClose: {
+    backgroundColor: '#fd6b00',
+    borderRadius: 10,
   },
 });
 export default HeaderTitleModal;

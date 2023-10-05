@@ -71,7 +71,7 @@ const Subscribe = props => {
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <Text style={styles.modalText}>
-                  좌석번호 : {selectedSeatData.station_num}번
+                  좌석번호 : {selectedSeatData.station_name.split('_')[1]}번
                 </Text>
                 <View style={styles.item}>
                   {item.map((item, index) => (
@@ -130,7 +130,6 @@ const Subscribe = props => {
 
 const styles = StyleSheet.create({
   centeredView: {
-    flex: 1,
     justifyContent: 'center', // 세로 중앙 정렬
     alignItems: 'center', // 가로 중앙 정렬
     position: 'absolute',
@@ -139,19 +138,19 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
-    // backgroundColor: 'red',
   },
 
   modalView: {
     // margin: 20,
+
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 200,
+    padding: '20%',
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
@@ -174,7 +173,6 @@ const styles = StyleSheet.create({
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
-    textAlign: 'center',
   },
   modalText: {
     marginBottom: 15,
