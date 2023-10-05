@@ -16,11 +16,64 @@ import Countdown from './Countdown';
 // 예약가능 #fd6b00
 // 사용중 #ffffff
 // 예약불가  #6f6f6f
-
+// const data = {
+//   area_info: {
+//     area_name: 'Area.svg',
+//     area_width: '1440',
+//     area_height: '1024',
+//   },
+//   station_info_list: [
+//     {
+//       station_num: '1',
+//       x_coordinate: '674',
+//       y_coordinate: '300',
+//       station_width: '110',
+//       station_height: '62',
+//       station_color: '#D9D9D9',
+//       status: 'beInUse', // 사용중
+//     },
+//     {
+//       station_num: '2',
+//       x_coordinate: '821',
+//       y_coordinate: '300',
+//       station_width: '110',
+//       station_height: '62',
+//       station_color: '#D9D9D9',
+//       status: 'notAvailable', // 예약불가
+//     },
+//     {
+//       station_num: '3',
+//       x_coordinate: '968',
+//       y_coordinate: '430',
+//       station_width: '110',
+//       station_height: '62',
+//       station_color: '#D9D9D9',
+//       status: 'reservationAvailable', // 예약가능
+//     },
+//     {
+//       station_num: '4',
+//       x_coordinate: '944',
+//       y_coordinate: '560',
+//       station_width: '110',
+//       station_height: '62',
+//       station_color: '#D9D9D9',
+//       status: 'beInUse', // 사용중
+//     },
+//     {
+//       station_num: '5',
+//       x_coordinate: '756',
+//       y_coordinate: '453',
+//       station_width: '110',
+//       station_height: '62',
+//       station_color: '#D9D9D9',
+//       status: 'notAvailable', // 예약불가
+//     },
+//   ],
+// };
 const statusColor = {
-  reservationAvailable: '#fd6b00', // 이용중
-  emptySeat: '#fafafa', // 빈타석
-  notAvailable: '#6f6f6f', // ⭐️ 이용불가 -> 10월 말까지는 신경 x
+  reservationAvailable: '#fd6b00',
+  emptySeat: '#fafafa',
+  notAvailable: '#6f6f6f',
 };
 const Main = ({seatStore, footerStore}) => {
   const [seatAreaX, setSeatAreaX] = useState(0); // area에 y값
@@ -61,12 +114,12 @@ const Main = ({seatStore, footerStore}) => {
           />
           {seatStore.seatDataList['station_info_list'].map(
             (seatData, index) => (
-              <TouchableOpacity
+              <Pressable
                 key={index} // Add a unique key
                 onPress={() => clickSeat(index, seatData)} // TouchableOpacity 클릭 시 팝업창 열림
                 style={{
                   width: parseInt(seatData.station_width) + 20,
-                  height: parseInt(seatData.station_height) + 50,
+                  height: parseInt(seatData.station_height) + 20,
                   backgroundColor: statusColor[seatData.status],
                   position: 'absolute',
                   left: parseInt(seatData.x_coordinate) + seatAreaX,
@@ -74,36 +127,30 @@ const Main = ({seatStore, footerStore}) => {
                   borderWidth: 3,
                   borderRadius: 10,
                   borderColor: selectedSeatIndex === index ? 'blue' : '#000000', // 선택된 항목일 때 다른 색상
-                  // justifyContent: 'center',
-                  // alignItems: 'center',
-                  padding: 10,
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
-                disabled={
-                  seatData.status === 'reservationAvailable' ? true : false
-                }>
-                {/* {seatData.status === 'notAvailable' ? (
-                  <View style={[styles.notAvailable]}>
+                disabled={seatData.status === 'notAvailable' ? true : false}>
+                {seatData.status === 'notAvailable' ? (
+                  <View style={styles.notAvailable}>
                     <Text style={styles.notAvailableText}>예약불가</Text>
                   </View>
-                ) : ( */}
-                <View style={styles.infoText}>
-                  <Text style={styles.seatNumText}>{index + 1} 번</Text>
-                  {/* <Text style={styles.remainingTimeText}>
+                ) : (
+                  <View style={styles.infoText}>
+                    <Text style={styles.seatNumText}>{index + 1} 번</Text>
+                    {/* <Text style={styles.remainingTimeText}>
                       {seatData.useTime}
                     </Text> */}
 
-                  {seatData.useTime === 0 ? null : (
-                    <Countdown useTime={seatData.useTime} seatData={seatData} />
-                  )}
-                  {seatData.status === 'emptySeat' ? null : (
-                    <View style={{borderWidth: 0.5}}></View>
-                  )}
-                  <View style={styles.pending}>
-                    <Text style={styles.pendingText}></Text>
+                    {seatData.useTime === 0 ? null : (
+                      <Countdown
+                        useTime={seatData.useTime}
+                        seatData={seatData}
+                      />
+                    )}
                   </View>
-                </View>
-                {/* )} */}
-              </TouchableOpacity>
+                )}
+              </Pressable>
             ),
           )}
           {footerStore.reserveBtn ? (
@@ -129,7 +176,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   notAvailable: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -138,8 +184,8 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   infoText: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

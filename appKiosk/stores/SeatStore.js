@@ -5,7 +5,6 @@ import {produce} from 'immer';
 // reservationAvailable : 이용중인데 예약 가능한 경우
 // notAvailable: 이용불가
 const SeatStore = observable({
-  seatStatusCounts: {},
   seatDataList: {
     area_info: {
       area_name: 'Area.svg',
@@ -60,10 +59,9 @@ const SeatStore = observable({
         station_width: '110',
         station_height: '62',
         station_color: '#D9D9D9',
-        status: 'emptySeat',
+        status: 'notAvailable',
         useTime: 0,
       },
-      // notAvailable : 이용 불가 -> status에 넣으면 됌
     ],
     useStatus: {
       emptyseat: [],
