@@ -5,7 +5,7 @@ import {Observer} from 'mobx-react';
 
 const Countdown = ({seatData}) => {
   const {seatStore} = indexStore();
-  const [remainingTime, setRemainingTime] = useState(seatData.useTime);
+  const [remainingTime, setRemainingTime] = useState(seatData.use_time);
   const requestRef = useRef();
   const startTimeRef = useRef();
 
@@ -17,7 +17,7 @@ const Countdown = ({seatData}) => {
       const elapsedTime = time - startTimeRef.current;
 
       if (elapsedTime >= 1000) {
-        seatStore.timeMinus(seatData, seatData.station_num);
+        // seatStore.timeMinus(seatData, seatData.key);
         setRemainingTime(prevTime => prevTime - 1);
         startTimeRef.current = time;
       }
@@ -29,6 +29,8 @@ const Countdown = ({seatData}) => {
 
     if (remainingTime > 0) {
       requestRef.current = requestAnimationFrame(animate);
+    } else if (remainingTime === 0) {
+      seatStore.seatDataSetting(seatData);
     }
 
     return () => {
@@ -39,9 +41,9 @@ const Countdown = ({seatData}) => {
   }, [remainingTime, seatData, seatStore]);
 
   useEffect(() => {
-    // useTime이 변경될 때마다 남은 시간을 업데이트
-    setRemainingTime(seatData.useTime);
-  }, [seatData.useTime]);
+    // use_time이 변경될 때마다 남은 시간을 업데이트
+    setRemainingTime(seatData.use_time);
+  }, [seatData.use_time]);
 
   const minutes = Math.floor(remainingTime / 60);
   const seconds = remainingTime % 60;

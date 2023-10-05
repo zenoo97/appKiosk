@@ -19,23 +19,9 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'skyblue',
+
     // justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
-  },
-  footer: {
-    flex: 1,
-    backgroundColor: '#dedede',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-  },
-
-  reserveBtnText: {
-    fontSize: 35,
-    padding: 10,
-    fontWeight: 'bold',
   },
 });
 

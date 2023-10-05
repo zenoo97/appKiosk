@@ -16,63 +16,9 @@ import Countdown from './Countdown';
 // 예약가능 #fd6b00
 // 사용중 #ffffff
 // 예약불가  #6f6f6f
-// const data = {
-//   area_info: {
-//     area_name: 'Area.svg',
-//     area_width: '1440',
-//     area_height: '1024',
-//   },
-//   station_info_list: [
-//     {
-//       station_num: '1',
-//       x_coordinate: '674',
-//       y_coordinate: '300',
-//       station_width: '110',
-//       station_height: '62',
-//       station_color: '#D9D9D9',
-//       status: 'beInUse', // 사용중
-//     },
-//     {
-//       station_num: '2',
-//       x_coordinate: '821',
-//       y_coordinate: '300',
-//       station_width: '110',
-//       station_height: '62',
-//       station_color: '#D9D9D9',
-//       status: 'notAvailable', // 예약불가
-//     },
-//     {
-//       station_num: '3',
-//       x_coordinate: '968',
-//       y_coordinate: '430',
-//       station_width: '110',
-//       station_height: '62',
-//       station_color: '#D9D9D9',
-//       status: 'reservationAvailable', // 예약가능
-//     },
-//     {
-//       station_num: '4',
-//       x_coordinate: '944',
-//       y_coordinate: '560',
-//       station_width: '110',
-//       station_height: '62',
-//       station_color: '#D9D9D9',
-//       status: 'beInUse', // 사용중
-//     },
-//     {
-//       station_num: '5',
-//       x_coordinate: '756',
-//       y_coordinate: '453',
-//       station_width: '110',
-//       station_height: '62',
-//       station_color: '#D9D9D9',
-//       status: 'notAvailable', // 예약불가
-//     },
-//   ],
-// };
 const statusColor = {
-  reservationAvailable: '#fd6b00',
-  emptySeat: '#fafafa',
+  used: '#fd6b00',
+  empty: '#fafafa',
   notAvailable: '#6f6f6f',
 };
 const Main = ({seatStore, footerStore}) => {
@@ -86,10 +32,9 @@ const Main = ({seatStore, footerStore}) => {
     // console.log('onLayout', layout); // layout 출력
   };
 
-  const [modalData, setModalData] = useState(null);
-
-  const clickSeat = (index, seatData) => {
-    setModalData(seatData);
+  const [selectedSeatData, setSelectedSeatData] = useState(null);
+  const clickSeat = (seatData, index) => {
+    setSelectedSeatData(seatData);
 
     if (selectedSeatIndex === index) {
       setSelectedSeatIndex(-1); // 같은 항목을 다시 클릭하면 취소
@@ -99,27 +44,30 @@ const Main = ({seatStore, footerStore}) => {
       footerStore.onBtn();
       // 클릭 시
     }
+    console.log(selectedSeatData);
+
     // 클릭 시 실행
   };
   const resetSelectedSeatIndex = () => {
     setSelectedSeatIndex(-1);
   };
+
   return (
     <Observer>
       {() => (
         <View style={styles.container}>
           <SvgUri
-            uri="https://broj.s3.ap-northeast-2.amazonaws.com/jgroup/1234/station-area/Area.svg"
+            uri={`https://broj.s3.ap-northeast-2.amazonaws.com/${seatStore.seatDataList['area_info'].svg_file_name}`}
             onLayout={onLayout}
           />
           {seatStore.seatDataList['station_info_list'].map(
             (seatData, index) => (
-              <Pressable
+              <TouchableOpacity
                 key={index} // Add a unique key
-                onPress={() => clickSeat(index, seatData)} // TouchableOpacity 클릭 시 팝업창 열림
+                onPress={() => clickSeat(seatData, index)} // TouchableOpacity 클릭 시 팝업창 열림
                 style={{
-                  width: parseInt(seatData.station_width) + 20,
-                  height: parseInt(seatData.station_height) + 20,
+                  width: parseInt(seatData.station_width),
+                  height: parseInt(seatData.station_height),
                   backgroundColor: statusColor[seatData.status],
                   position: 'absolute',
                   left: parseInt(seatData.x_coordinate) + seatAreaX,
@@ -127,37 +75,30 @@ const Main = ({seatStore, footerStore}) => {
                   borderWidth: 3,
                   borderRadius: 10,
                   borderColor: selectedSeatIndex === index ? 'blue' : '#000000', // 선택된 항목일 때 다른 색상
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  // justifyContent: 'center',
+                  // alignItems: 'center',
                 }}
-                disabled={seatData.status === 'notAvailable' ? true : false}>
-                {seatData.status === 'notAvailable' ? (
-                  <View style={styles.notAvailable}>
-                    <Text style={styles.notAvailableText}>예약불가</Text>
-                  </View>
-                ) : (
-                  <View style={styles.infoText}>
-                    <Text style={styles.seatNumText}>{index + 1} 번</Text>
-                    {/* <Text style={styles.remainingTimeText}>
-                      {seatData.useTime}
-                    </Text> */}
-
-                    {seatData.useTime === 0 ? null : (
-                      <Countdown
-                        useTime={seatData.useTime}
-                        seatData={seatData}
-                      />
-                    )}
-                  </View>
-                )}
-              </Pressable>
+                disabled={seatData.status === 'used' ? true : false}>
+                <View style={styles.infoText}>
+                  <Text style={styles.seatNumText}>
+                    {seatData.station_name}
+                  </Text>
+                  {seatData.use_time === 0 ? null : (
+                    <Countdown
+                      use_time={seatData.use_time}
+                      seatData={seatData}
+                    />
+                  )}
+                </View>
+              </TouchableOpacity>
             ),
           )}
           {footerStore.reserveBtn ? (
             <Subscribe
-              modalData={modalData}
+              selectedSeatData={selectedSeatData}
               seatStore={seatStore}
               resetSelectedSeatIndex={resetSelectedSeatIndex}
+              selectedSeatIndex={selectedSeatIndex}
             />
           ) : null}
         </View>
@@ -168,9 +109,11 @@ const Main = ({seatStore, footerStore}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'black',
-    alignItems: 'center',
+    flex: 3,
+    // backgroundColor: 'red',
+    justifyContent: 'center',
   },
+
   seatNumText: {
     fontWeight: 'bold',
     fontSize: 20,
@@ -185,7 +128,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     justifyContent: 'center',
-    alignItems: 'center',
+    padding: 10,
   },
 });
 

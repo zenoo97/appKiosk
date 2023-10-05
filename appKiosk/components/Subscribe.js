@@ -14,8 +14,8 @@ import produce from 'immer';
 
 const Subscribe = props => {
   const {footerStore, seatStore} = indexStore();
-  const {modalData} = props;
-  // console.log(modalData.station_num + '번 타석 선택');
+  const {selectedSeatData, selectedSeatIndex} = props;
+  console.log(JSON.stringify(selectedSeatData) + '번 타석 선택');
   const offReserveBtn = () => {
     footerStore.offReserveBtn();
     console.log('modal off');
@@ -36,7 +36,7 @@ const Subscribe = props => {
     },
   ];
   const itemHandler = index => {
-    console.log(item[index].name);
+    // console.log(item[index].name);
     if (selectedItemIndex === index) {
       setSelectedItemIndex(-1); // 같은 항목을 다시 클릭하면 취소
     } else {
@@ -44,37 +44,18 @@ const Subscribe = props => {
       // 클릭 시
     }
   };
-  const alertMessageStyle = {
-    fontSize: 30, // 원하는 글꼴 크기로 설정
-    // 추가 스타일을 여기에 적용할 수 있습니다.
-    width: 100,
-    height: 100,
-  };
   const reserveHandler = selectedItemIndex => {
-    // console.log(`${modalData.station_num}번 타석 예약이 되었습니다.`);
+    // console.log(`${selectedSeatData.station_num}번 타석 예약이 되었습니다.`);
     // console.log(`${item[selectedItemIndex].name} 이용권 확정`);
+    console.log(selectedSeatData);
     props.resetSelectedSeatIndex();
-    try {
-      seatStore.seatUpdate(
-        modalData.status,
-        modalData.station_num,
-        item[selectedItemIndex].name,
-      );
-      // console.log(item[selectedItemIndex].name + '초 이용권 선택');
-      footerStore.offBtn();
-      offReserveBtn();
-    } catch {
-      Alert.alert(
-        '',
-        '아이템을 선택해주세요.',
-        [
-          {
-            text: '확인',
-          },
-        ],
-        {messageStyle: alertMessageStyle},
-      );
-    }
+    seatStore.seatUpdate(
+      selectedSeatData.status,
+      selectedSeatData.key,
+      item[selectedItemIndex].name,
+    );
+    // console.log(item[selectedItemIndex].name + '초 이용권 선택');
+    footerStore.offBtn();
   };
   return (
     <Observer>
@@ -90,7 +71,7 @@ const Subscribe = props => {
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <Text style={styles.modalText}>
-                  좌석번호 : {modalData.station_num}번
+                  좌석번호 : {selectedSeatData.station_num}번
                 </Text>
                 <View style={styles.item}>
                   {item.map((item, index) => (
@@ -119,7 +100,7 @@ const Subscribe = props => {
                     ]}
                     onPress={() => {
                       reserveHandler(selectedItemIndex);
-                      // footerStore.offReserveBtn();
+                      footerStore.offReserveBtn();
                     }}>
                     <Text style={[styles.textStyle, {color: 'white'}]}>
                       예약
