@@ -81,7 +81,7 @@ const Main = ({seatStore, footerStore}) => {
                 disabled={seatData.status === 'used' ? true : false}>
                 <View style={styles.infoText}>
                   <Text style={styles.seatNumText}>
-                    {seatData.station_name.split('_')[1]} 번
+                    {seatData.station_name}
                   </Text>
                   {seatData.use_time === 0 ? null : (
                     <Countdown
