@@ -13,38 +13,27 @@ import {Observer} from 'mobx-react';
 import produce from 'immer';
 
 const Subscribe = props => {
-  const {footerStore, seatStore} = indexStore();
+  const {footerStore, seatStore, ticketStore} = indexStore();
   const {selectedSeatData, selectedSeatIndex} = props;
-  console.log(JSON.stringify(selectedSeatData) + '번 타석 선택');
+  const {tickets} = ticketStore;
+  // console.log(tickets);
+  // console.log(JSON.stringify(selectedSeatData) + '번 타석 선택');
   const offReserveBtn = () => {
     footerStore.offReserveBtn();
     console.log('modal off');
   };
-  const [selectedItemIndex, setSelectedItemIndex] = useState(-1);
-  const item = [
-    {
-      id: '15분',
-      name: 900,
-    },
-    {
-      id: '30분',
-      name: 1800,
-    },
-    {
-      id: '60분',
-      name: 3600,
-    },
-  ];
-  const itemHandler = index => {
+  const [selectedTicketIndex, setSelectedTicketIndex] = useState(-1);
+
+  const ticketHandler = index => {
     // console.log(item[index].name);
-    if (selectedItemIndex === index) {
-      setSelectedItemIndex(-1); // 같은 항목을 다시 클릭하면 취소
+    if (selectedTicketIndex === index) {
+      setSelectedTicketIndex(-1); // 같은 항목을 다시 클릭하면 취소
     } else {
-      setSelectedItemIndex(index); // 클릭한 항목의 인덱스를 업데이트
+      setSelectedTicketIndex(index); // 클릭한 항목의 인덱스를 업데이트
       // 클릭 시
     }
   };
-  const reserveHandler = selectedItemIndex => {
+  const reserveHandler = selectedTicketIndex => {
     // console.log(`${selectedSeatData.station_num}번 타석 예약이 되었습니다.`);
     // console.log(`${item[selectedItemIndex].name} 이용권 확정`);
     console.log(selectedSeatData);
@@ -52,7 +41,7 @@ const Subscribe = props => {
     seatStore.seatUpdate(
       selectedSeatData.status,
       selectedSeatData.key,
-      item[selectedItemIndex].name,
+      tickets[selectedTicketIndex].name,
     );
     // console.log(item[selectedItemIndex].name + '초 이용권 선택');
     footerStore.offBtn();
@@ -73,21 +62,25 @@ const Subscribe = props => {
                 <Text style={styles.modalText}>
                   좌석번호 : {selectedSeatData.station_name.split('_')[1]}번
                 </Text>
-                <View style={styles.item}>
-                  {item.map((item, index) => (
+                <View style={styles.ticket}>
+                  {tickets.map((ticket, index) => (
                     <TouchableOpacity
                       key={index}
                       style={[
-                        styles.items,
+                        styles.tickets,
                         {
                           borderColor:
-                            selectedItemIndex === index ? '#fd6d22' : '#000000',
+                            selectedTicketIndex === index
+                              ? '#fd6d22'
+                              : '#000000',
                           backgroundColor:
-                            selectedItemIndex === index ? '#ffe0cc' : '#eeeeee',
+                            selectedTicketIndex === index
+                              ? '#ffe0cc'
+                              : '#eeeeee',
                         },
                       ]}
-                      onPress={() => itemHandler(index)}>
-                      <Text>{item.id}</Text>
+                      onPress={() => ticketHandler(index)}>
+                      <Text>{ticket.id}</Text>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -99,7 +92,7 @@ const Subscribe = props => {
                       {backgroundColor: '#fa6402'},
                     ]}
                     onPress={() => {
-                      reserveHandler(selectedItemIndex);
+                      reserveHandler(selectedTicketIndex);
                       footerStore.offReserveBtn();
                     }}>
                     <Text style={[styles.textStyle, {color: 'white'}]}>
@@ -180,10 +173,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
   },
-  item: {
+  ticket: {
     flexDirection: 'row',
   },
-  items: {
+  tickets: {
     borderWidth: 1,
     backgroundColor: '#eeeeee',
     padding: 30,
