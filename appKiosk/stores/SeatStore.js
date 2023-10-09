@@ -91,6 +91,7 @@ const SeatStore = observable({
         area_key: 174745,
         group_key: 174459,
         use_time: 0,
+        user: [],
       },
 
       {
@@ -106,6 +107,7 @@ const SeatStore = observable({
         area_key: 174745,
         group_key: 174459,
         use_time: 0,
+        user: [],
       },
 
       {
@@ -121,6 +123,7 @@ const SeatStore = observable({
         area_key: 174745,
         group_key: 174459,
         use_time: 0,
+        user: [],
       },
 
       {
@@ -136,6 +139,7 @@ const SeatStore = observable({
         area_key: 174745,
         group_key: 174459,
         use_time: 0,
+        user: [],
       },
 
       {
@@ -151,6 +155,7 @@ const SeatStore = observable({
         area_key: 174745,
         group_key: 174459,
         use_time: 0,
+        user: [],
       },
 
       {
@@ -166,6 +171,7 @@ const SeatStore = observable({
         area_key: 174745,
         group_key: 174459,
         use_time: 0,
+        user: [],
       },
 
       {
@@ -181,6 +187,7 @@ const SeatStore = observable({
         area_key: 174745,
         group_key: 174459,
         use_time: 0,
+        user: [],
       },
 
       {
@@ -196,6 +203,7 @@ const SeatStore = observable({
         area_key: 174745,
         group_key: 174459,
         use_time: 0,
+        user: [],
       },
 
       {
@@ -211,6 +219,7 @@ const SeatStore = observable({
         area_key: 174745,
         group_key: 174459,
         use_time: 0,
+        user: [],
       },
 
       {
@@ -226,11 +235,12 @@ const SeatStore = observable({
         area_key: 174745,
         group_key: 174459,
         use_time: 0,
+        user: [],
       },
     ],
   },
 
-  seatUpdate(seatStatus, key, use_time) {
+  seatUpdate(seatStatus, key, use_time, userName) {
     this.seatDataList['station_info_list'] = produce(
       toJS(this.seatDataList['station_info_list']),
       draft => {
@@ -238,6 +248,7 @@ const SeatStore = observable({
           if (data.key === key) {
             data.use_time += use_time;
             data.status = 'used';
+            data.user.push(userName);
           }
         });
       },

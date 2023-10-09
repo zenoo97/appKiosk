@@ -25,6 +25,7 @@ const Main = ({seatStore, footerStore}) => {
   const [seatAreaX, setSeatAreaX] = useState(0); // area에 y값
   const [seatAreaY, setSeatAreaY] = useState(0); // area에 y값
   const [selectedSeatIndex, setSelectedSeatIndex] = useState(-1);
+
   const onLayout = e => {
     const {layout} = e.nativeEvent; // layout 추출
     setSeatAreaX(layout.x);
@@ -59,6 +60,7 @@ const Main = ({seatStore, footerStore}) => {
           <SvgUri
             uri={`https://broj.s3.ap-northeast-2.amazonaws.com/${seatStore.seatDataList['area_info'].svg_file_name}`}
             onLayout={onLayout}
+            style={styles.svg}
           />
           {seatStore.seatDataList['station_info_list'].map(
             (seatData, index) => (
@@ -112,6 +114,7 @@ const styles = StyleSheet.create({
     flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
+    // backgroundColor: 'green',
   },
 
   seatNumText: {

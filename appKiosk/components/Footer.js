@@ -14,16 +14,20 @@ const Footer = ({footerStore}) => {
       {() => (
         <View
           style={[
-            styles.footer,
-            {backgroundColor: !footerStore.changeBtn ? '#dedede' : '#fd6b00'},
+            styles.container,
+            {backgroundColor: !footerStore.changeBtn ? '#D9D9D9' : '#fd6b00'},
           ]}>
           <TouchableOpacity
             disabled={!footerStore.changeBtn ? true : false}
             onPress={reserveBtnHandler}>
-            <Text style={styles.reserveBtnText}>
+            <Text
+              style={[
+                styles.reserveBtnText,
+                {color: footerStore.changeBtn ? 'white' : 'black'},
+              ]}>
               {!footerStore.changeBtn
-                ? '예약하실 좌석을 선택해주세요'
-                : '예약하기'}
+                ? '사용하실 좌석을 선택해주세요'
+                : '바로 입장하기'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -51,18 +55,18 @@ const Footer = ({footerStore}) => {
 };
 // '#dedede',#fd6b00
 const styles = StyleSheet.create({
-  footer: {
-    flex: 0.5,
+  container: {
+    width: 1080,
+    height: 150,
+    padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
+    gap: 10,
+    flexShrink: 0,
   },
   reserveBtnText: {
-    fontSize: 35,
-    padding: 10,
-    fontWeight: 'bold',
-    // backgroundColor: 'red',
-    width: '100%',
+    fontSize: 50,
+    fontWeight: '500',
   },
   // footer: {
   //   flex: 1,

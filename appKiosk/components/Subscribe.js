@@ -7,14 +7,20 @@ import {
   Pressable,
   View,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import indexStore from '../stores/IndexStore';
 import {Observer} from 'mobx-react';
 import produce from 'immer';
+import Keypad from './Keypad';
 
 const Subscribe = props => {
+  const [userName, setUserName] = useState('');
+  const [selectedUser, setSelectedUser] = useState(true); // 유저 선택 status 관리, false: 비회원, true: 회원
+  const [openTicket, setOpenTicket] = useState(false);
   const {footerStore, seatStore, ticketStore} = indexStore();
   const {selectedSeatData, selectedSeatIndex} = props;
+
   const {tickets} = ticketStore;
   // console.log(tickets);
   // console.log(JSON.stringify(selectedSeatData) + '번 타석 선택');
@@ -42,9 +48,20 @@ const Subscribe = props => {
       selectedSeatData.status,
       selectedSeatData.key,
       tickets[selectedTicketIndex].name,
+      userName,
     );
     // console.log(item[selectedItemIndex].name + '초 이용권 선택');
     footerStore.offBtn();
+    setUserName('');
+  };
+
+  const userBtnHandler = () => {
+    console.log('user btn click');
+    setSelectedUser(curr => true);
+  };
+  const nonUserBtnHandler = () => {
+    console.log('non user btn click');
+    setSelectedUser(curr => false);
   };
   return (
     <Observer>
@@ -59,31 +76,59 @@ const Subscribe = props => {
             }}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>
-                  좌석번호 : {selectedSeatData.station_name.split('_')[1]}번
-                </Text>
-                <View style={styles.ticket}>
-                  {tickets.map((ticket, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      style={[
-                        styles.tickets,
-                        {
-                          borderColor:
-                            selectedTicketIndex === index
-                              ? '#fd6d22'
-                              : '#000000',
-                          backgroundColor:
-                            selectedTicketIndex === index
-                              ? '#ffe0cc'
-                              : '#eeeeee',
-                        },
-                      ]}
-                      onPress={() => ticketHandler(index)}>
-                      <Text>{ticket.id}</Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
+                {/* <View style={styles.selectUser}>
+                  <Pressable
+                    style={[
+                      styles.user,
+                      {backgroundColor: selectedUser ? '#525252' : '#eeeeee'},
+                    ]}
+                    onPress={userBtnHandler}>
+                    <Text style={styles.userText}>회원입장</Text>
+                  </Pressable>
+                  <Pressable
+                    style={[
+                      styles.nonUser,
+                      {backgroundColor: selectedUser ? '#eeeeee' : '#525252'},
+                    ]}
+                    disabled
+                    onPress={nonUserBtnHandler}>
+                    <Text style={styles.nonUserText}>비회원입장</Text>
+                  </Pressable>
+                </View> */}
+
+                {!openTicket ? (
+                  <View>
+                    <View>
+                      <Keypad />
+                    </View>
+                  </View>
+                ) : (
+                  <>
+                    <View style={styles.ticket}>
+                      {tickets.map((ticket, index) => (
+                        <TouchableOpacity
+                          key={index}
+                          style={[
+                            styles.tickets,
+                            {
+                              borderColor:
+                                selectedTicketIndex === index
+                                  ? '#fd6d22'
+                                  : '#000000',
+                              backgroundColor:
+                                selectedTicketIndex === index
+                                  ? '#ffe0cc'
+                                  : '#eeeeee',
+                            },
+                          ]}
+                          onPress={() => ticketHandler(index)}>
+                          <Text>{ticket.id}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  </>
+                )}
+
                 <View style={styles.btn}>
                   <Pressable
                     style={[
@@ -157,12 +202,7 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
   },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
+
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
@@ -182,6 +222,35 @@ const styles = StyleSheet.create({
     padding: 30,
     borderRadius: 5,
     margin: 10,
+  },
+  userInput: {
+    backgroundColor: '#eeeeee',
+    width: 200,
+    padding: 15,
+  },
+  selectUser: {
+    flexDirection: 'row',
+    // backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  user: {
+    // flex: 1,
+    backgroundColor: 'green',
+    paddingHorizontal: 50,
+    paddingVertical: 10,
+  },
+  nonUser: {
+    // flex: 1,
+    backgroundColor: 'yellow',
+    paddingHorizontal: 50,
+    paddingVertical: 10,
+  },
+  userText: {
+    fontSize: 20,
+  },
+  nonUserText: {
+    fontSize: 20,
   },
 });
 export default Subscribe;

@@ -5,6 +5,7 @@ import HeaderContainer from './container/HeaderContainer';
 import FooterContainer from './container/FooterContainer';
 import MainContainer from './container/MainContainer';
 import Subscribe from './components/Subscribe';
+import StatusBar from './components/StatusBar';
 
 function App() {
   return (
@@ -19,9 +20,6 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
-    // justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 
