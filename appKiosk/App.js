@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 
-import HeaderContainer from './container/HeaderContainer';
-import FooterContainer from './container/FooterContainer';
-import MainContainer from './container/MainContainer';
-import Subscribe from './components/Subscribe';
-import StatusBar from './components/StatusBar';
+import HeaderContainer from './src/container/HeaderContainer';
+import FooterContainer from './src/container/FooterContainer';
+
+import Subscribe from './src/components/seatReservation/Subscribe';
+import StatusBar from './src/components/home/StatusBar';
+import HomeContainer from './src/container/HomeContainer';
 
 function App() {
   return (
     <View style={styles.container}>
       <HeaderContainer />
       <StatusBar />
-      <MainContainer />
-
+      <HomeContainer />
       <FooterContainer />
     </View>
   );
@@ -22,10 +22,6 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    width: 1080,
-    height: 1920,
   },
 });
 

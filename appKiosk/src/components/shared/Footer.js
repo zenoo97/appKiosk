@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Observer} from 'mobx-react';
-import {height, scale} from '../config/globalStyles';
+import {height, scale} from '../../config/globalStyles';
 const Footer = ({footerStore}) => {
   const reserveBtnHandler = () => {
     footerStore.onReserveBtn();

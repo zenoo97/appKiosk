@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Observer} from 'mobx-react';
 import HeaderTitleModal from './HeaderTitleModal';
-import {height, scale, width} from '../config/globalStyles';
+import {height, scale, width} from '../../config/globalStyles';
 
 // 요일을 한글로 변환
 const Header = ({headerStore}) => {
@@ -85,36 +85,36 @@ const styles = StyleSheet.create({
     // alignItems: 'flex-end',
     // paddingHorizontal: 60,
     width: 1080,
-    height: 191 * height,
+    height: 191,
     backgroundColor: '#2E2E2E',
   },
   logo: {
-    paddingLeft: 67 * width,
-    paddingTop: 72 * height,
+    paddingLeft: 67,
+    paddingTop: 72,
     // paddingBottom: 59 * height,
   },
   logoText: {
-    fontSize: 50 * scale,
+    fontSize: 50,
     color: '#FFF',
     fontWeight: '700',
     // fontFamily: 'Pretendard',
     // lineHeight: 'normal',
   },
   dateView: {
-    paddingTop: 48 * height,
-    paddingRight: 67 * width,
+    paddingTop: 48,
+    paddingRight: 67,
 
     // textAlign: 'right',
   },
   date: {
     color: '#FFFFFF',
-    fontSize: 30 * scale,
+    fontSize: 30,
     fontWeight: '700',
     textAlign: 'right',
   },
   time: {
     color: '#FFF',
-    fontSize: 50 * scale,
+    fontSize: 50,
     fontWeight: '700',
   },
 });

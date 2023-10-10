@@ -15,5 +15,6 @@ const TicketStore = observable({
       name: 3600,
     },
   ],
+  openTicket: false,
 });
 export default TicketStore;

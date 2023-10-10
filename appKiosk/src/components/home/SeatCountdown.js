@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {StyleSheet, Text} from 'react-native';
-import indexStore from '../stores/IndexStore';
+import indexStore from '../../stores/IndexStore';
 import {Observer} from 'mobx-react';
 
 const Countdown = ({seatData}) => {

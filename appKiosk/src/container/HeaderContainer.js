@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Header from '../components/Header';
+import Header from '../components/shared/Header';
 import indexStore from '../stores/IndexStore';
 import {Observer} from 'mobx-react';
 

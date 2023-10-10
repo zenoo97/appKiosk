@@ -1,4 +1,4 @@
-import Footer from '../components/Footer';
+import Footer from '../components/shared/Footer';
 import React from 'react';
 import indexStore from '../stores/IndexStore';
 import {Observer} from 'mobx-react';

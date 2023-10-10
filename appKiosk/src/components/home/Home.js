@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 import {SvgUri} from 'react-native-svg';
 // import Modal from './Modal'; // 팝업창 컴포넌트 import
-import Subscribe from './Subscribe';
+import Subscribe from '../seatReservation/Subscribe';
 import {Observer} from 'mobx-react';
-import Countdown from './Countdown';
+import SeatCountdown from './SeatCountdown';
 import StatusBar from './StatusBar';
-import {height, scale, width} from '../config/globalStyles';
+import {height, scale, width} from '../../config/globalStyles';
 
 // 예약가능 #fd6b00
 // 사용중 #ffffff
@@ -87,7 +87,7 @@ const Main = ({seatStore, footerStore}) => {
                     {seatData.station_name.split('_')[1]} 번
                   </Text>
                   {seatData.use_time === 0 ? null : (
-                    <Countdown
+                    <SeatCountdown
                       use_time={seatData.use_time}
                       seatData={seatData}
                     />

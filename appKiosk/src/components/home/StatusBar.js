@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {View, Text, StyleSheet} from 'react-native';
-import {height, scale, width} from '../config/globalStyles';
+import {height, scale, width} from '../../config/globalStyles';
 
 const StatusBar = () => {
   const status = [
@@ -29,8 +29,9 @@ const StatusBar = () => {
   };
   return (
     <View style={styles.container}>
-      {status.map(item => (
+      {status.map((item, index) => (
         <StatusBarIcon
+          key={index}
           statusName={item.name}
           backgroundColor={item.backgroundColor}
         />

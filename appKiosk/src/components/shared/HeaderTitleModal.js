@@ -1,3 +1,5 @@
+// ⭐️ 추후 로고 클릭시 모달창 띄우기 기능
+
 import {
   Alert,
   Modal,
@@ -9,7 +11,8 @@ import {
 } from 'react-native';
 import React from 'react';
 import {Observer} from 'mobx-react';
-import indexStore from '../stores/IndexStore';
+import indexStore from '../../stores/IndexStore';
+
 const HeaderTitleModal = () => {
   const {headerStore} = indexStore();
   //   const {titleModalStatus, offTitleModal} = headerStore();
