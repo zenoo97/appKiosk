@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Observer} from 'mobx-react';
+import {height, scale} from '../config/globalStyles';
 const Footer = ({footerStore}) => {
   const reserveBtnHandler = () => {
     footerStore.onReserveBtn();
@@ -57,7 +58,7 @@ const Footer = ({footerStore}) => {
 const styles = StyleSheet.create({
   container: {
     width: 1080,
-    height: 150,
+    height: 150 * height,
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   reserveBtnText: {
-    fontSize: 50,
+    fontSize: 50 * scale,
     fontWeight: '500',
     color: '#000000',
     fontFamily: 'Pretendard',

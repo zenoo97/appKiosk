@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {View, Text, StyleSheet} from 'react-native';
+import {height, scale, width} from '../config/globalStyles';
 
 const StatusBar = () => {
   const status = [
@@ -19,14 +20,15 @@ const StatusBar = () => {
   ];
   const StatusBarIcon = ({index, statusName, backgroundColor}) => {
     return (
-      <View style={styles.statusBar}>
+      <View style={styles.container}>
         <View style={[styles.statusIcon, {backgroundColor}]}></View>
+        <View style={{paddingRight: 19.94}}></View>
         <Text style={styles.statusText}>{statusName}</Text>
       </View>
     );
   };
   return (
-    <View style={styles.statusBar}>
+    <View style={styles.container}>
       {status.map(item => (
         <StatusBarIcon
           statusName={item.name}
@@ -37,19 +39,23 @@ const StatusBar = () => {
   );
 };
 const styles = StyleSheet.create({
-  statusBar: {
+  container: {
     flexDirection: 'row',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    paddingLeft: 35.32 * width,
+    paddingTop: 46 * height,
+    // paddingBottom: 10,
+    // backgroundColor: '#EEE',
+    alignItems: 'center',
   },
   statusIcon: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    width: 33.234 * width,
+    height: 33.234 * width,
+    borderRadius: 3.323 * scale,
   },
   statusText: {
-    fontSize: 20,
-    paddingHorizontal: 5,
+    fontSize: 29.91 * scale,
+    fontWeight: '700',
+    color: '#000',
   },
 });
 export default StatusBar;

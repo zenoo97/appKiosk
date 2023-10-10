@@ -11,7 +11,9 @@ function App() {
   return (
     <View style={styles.container}>
       <HeaderContainer />
+      <StatusBar />
       <MainContainer />
+
       <FooterContainer />
     </View>
   );
@@ -20,6 +22,10 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    width: 1080,
+    height: 1920,
   },
 });
 

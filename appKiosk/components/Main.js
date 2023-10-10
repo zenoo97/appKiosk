@@ -12,6 +12,8 @@ import {SvgUri} from 'react-native-svg';
 import Subscribe from './Subscribe';
 import {Observer} from 'mobx-react';
 import Countdown from './Countdown';
+import StatusBar from './StatusBar';
+import {height, scale, width} from '../config/globalStyles';
 
 // 예약가능 #fd6b00
 // 사용중 #ffffff
@@ -60,7 +62,6 @@ const Main = ({seatStore, footerStore}) => {
           <SvgUri
             uri={`https://broj.s3.ap-northeast-2.amazonaws.com/${seatStore.seatDataList['area_info'].svg_file_name}`}
             onLayout={onLayout}
-            style={styles.svg}
           />
           {seatStore.seatDataList['station_info_list'].map(
             (seatData, index) => (
@@ -112,29 +113,30 @@ const Main = ({seatStore, footerStore}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor: 'green',
-    width: 1080,
-    height: 1920,
-    backgroundColor: '#EEE',
+    width: 1080 * width,
+    height: 1920 * height,
+    // backgroundColor: '#EEE',
   },
 
   seatNumText: {
-    fontWeight: 'bold',
-    fontSize: 20,
+    fontWeight: '700',
+    fontSize: 25 * scale,
   },
   notAvailable: {
     justifyContent: 'center',
     alignItems: 'center',
   },
   notAvailableText: {
-    fontSize: 20,
+    fontSize: 20 * scale,
     color: 'white',
   },
   infoText: {
     justifyContent: 'center',
-    padding: 10,
+    paddingHorizontal: 10 * width,
+    paddingVertical: 10 * height,
   },
 });
 

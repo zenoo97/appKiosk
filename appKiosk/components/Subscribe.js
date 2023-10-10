@@ -13,6 +13,7 @@ import indexStore from '../stores/IndexStore';
 import {Observer} from 'mobx-react';
 import produce from 'immer';
 import Keypad from './Keypad';
+import {height, scale, width} from '../config/globalStyles';
 
 const Subscribe = props => {
   const [userName, setUserName] = useState('');
@@ -104,9 +105,12 @@ const Subscribe = props => {
                   </View>
                 ) : (
                   <>
-                    <View>
+                    <View style={styles.seatNum}>
                       <Text style={styles.seatNumText}>
-                        {selectedSeatData.station_name.split('_')[1]}번
+                        {selectedSeatData.station_name.split('_')[1]}번 타석
+                      </Text>
+                      <Text style={styles.selectSeatUseTime}>
+                        타석 이용 시간을 설정해주세요
                       </Text>
                     </View>
                     <View style={styles.ticket}>
@@ -127,7 +131,7 @@ const Subscribe = props => {
                             },
                           ]}
                           onPress={() => ticketHandler(index)}>
-                          <Text>{ticket.id}</Text>
+                          <Text style={styles.ticketTime}>{ticket.id}</Text>
                         </TouchableOpacity>
                       ))}
                     </View>
@@ -188,17 +192,43 @@ const styles = StyleSheet.create({
 
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: '20%',
-    // alignItems: 'center',
-    // paddingVertical: 20,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    width: 866 * width,
+    height: 792 * height,
+    alignItems: 'center',
+  },
+  seatNum: {
+    paddingTop: 84 * height,
+    alignItems: 'center',
+  },
+  seatNumText: {
+    fontSize: 70 * scale,
+    fontWeight: '500',
+  },
+  selectSeatUseTime: {
+    color: '#000000',
+    fontSize: 40 * scale,
+    fontWeight: '400',
+  },
+  ticket: {
+    flexDirection: 'row',
+    // paddingTop: 34 * height,
+    paddingHorizontal: 14.133 * width,
+    paddingVertical: 14.133 * height,
+  },
+  tickets: {
+    // borderWidth: 1,
+    backgroundColor: '#eeeeee',
+    padding: 30,
+    borderRadius: 5,
+    margin: 10,
+    width: 212 * width,
+    height: 212 * height,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  ticketTime: {
+    fontSize: 70.667 * scale,
+    // textAlign: 'center',
   },
   btn: {
     flexDirection: 'row',
@@ -219,16 +249,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
   },
-  ticket: {
-    flexDirection: 'row',
-  },
-  tickets: {
-    borderWidth: 1,
-    backgroundColor: '#eeeeee',
-    padding: 30,
-    borderRadius: 5,
-    margin: 10,
-  },
+
   userInput: {
     backgroundColor: '#eeeeee',
     width: 200,
@@ -257,10 +278,6 @@ const styles = StyleSheet.create({
   },
   nonUserText: {
     fontSize: 20,
-  },
-  seatNumText: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
 });
 export default Subscribe;

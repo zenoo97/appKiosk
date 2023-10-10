@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Observer} from 'mobx-react';
 import HeaderTitleModal from './HeaderTitleModal';
+import {height, scale, width} from '../config/globalStyles';
 
 // 요일을 한글로 변환
 const Header = ({headerStore}) => {
@@ -80,39 +81,40 @@ const styles = StyleSheet.create({
     // flex: 0.5,
     // // width: '100%',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    // alignItems: 'center',
     // alignItems: 'flex-end',
     // paddingHorizontal: 60,
     width: 1080,
-    height: 191,
+    height: 191 * height,
     backgroundColor: '#2E2E2E',
   },
   logo: {
-    paddingLeft: 67,
-    paddingTop: 72,
-    paddingBottom: 59,
+    paddingLeft: 67 * width,
+    paddingTop: 72 * height,
+    // paddingBottom: 59 * height,
   },
   logoText: {
-    fontSize: 50,
+    fontSize: 50 * scale,
     color: '#FFF',
     fontWeight: '700',
     // fontFamily: 'Pretendard',
     // lineHeight: 'normal',
   },
   dateView: {
-    paddingTop: 48,
-    paddingRight: 67,
-    paddingBottom: 42,
+    paddingTop: 48 * height,
+    paddingRight: 67 * width,
+
     // textAlign: 'right',
   },
   date: {
     color: '#FFFFFF',
-    fontSize: 30,
+    fontSize: 30 * scale,
     fontWeight: '700',
+    textAlign: 'right',
   },
   time: {
     color: '#FFF',
-    fontSize: 50,
+    fontSize: 50 * scale,
     fontWeight: '700',
   },
 });
