@@ -15,7 +15,7 @@ const Footer = ({footerStore}) => {
         <View
           style={[
             styles.container,
-            {backgroundColor: !footerStore.changeBtn ? '#D9D9D9' : '#fd6b00'},
+            {backgroundColor: !footerStore.changeBtn ? '#D9D9D9' : '#FA6400'},
           ]}>
           <TouchableOpacity
             disabled={!footerStore.changeBtn ? true : false}
@@ -67,6 +67,8 @@ const styles = StyleSheet.create({
   reserveBtnText: {
     fontSize: 50,
     fontWeight: '500',
+    color: '#000000',
+    fontFamily: 'Pretendard',
   },
   // footer: {
   //   flex: 1,

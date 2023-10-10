@@ -111,10 +111,13 @@ const Main = ({seatStore, footerStore}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor: 'green',
+    width: 1080,
+    height: 1920,
+    backgroundColor: '#EEE',
   },
 
   seatNumText: {

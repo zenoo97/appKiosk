@@ -96,7 +96,7 @@ const Subscribe = props => {
                   </Pressable>
                 </View> */}
 
-                {!openTicket ? (
+                {openTicket ? (
                   <View>
                     <View>
                       <Keypad />
@@ -104,6 +104,11 @@ const Subscribe = props => {
                   </View>
                 ) : (
                   <>
+                    <View>
+                      <Text style={styles.seatNumText}>
+                        {selectedSeatData.station_name.split('_')[1]}번
+                      </Text>
+                    </View>
                     <View style={styles.ticket}>
                       {tickets.map((ticket, index) => (
                         <TouchableOpacity
@@ -184,7 +189,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     padding: '20%',
-    alignItems: 'center',
+    // alignItems: 'center',
+    // paddingVertical: 20,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -251,6 +257,10 @@ const styles = StyleSheet.create({
   },
   nonUserText: {
     fontSize: 20,
+  },
+  seatNumText: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
 export default Subscribe;

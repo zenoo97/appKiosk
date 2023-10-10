@@ -52,13 +52,13 @@ const Header = ({headerStore}) => {
     <Observer>
       {() => (
         <View style={styles.container}>
-          <TouchableOpacity onPress={titleModalHandler}>
+          <View onPress={titleModalHandler} style={styles.logo}>
             <Text style={styles.logoText}>
               {headerStore.headerTitle === ''
                 ? '브로제이 골프'
                 : headerStore.headerTitle}
             </Text>
-          </TouchableOpacity>
+          </View>
           <View style={styles.dateView}>
             <Text style={styles.date}>{dateString}</Text>
             <Text style={styles.time}>{timeString}</Text>
@@ -74,28 +74,45 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'black',
-    alignItems: 'center',
+    // backgroundColor: 'black',
+    // alignItems: 'center',
     flexDirection: 'row',
-    flex: 0.5,
-    width: '100%',
+    // flex: 0.5,
+    // // width: '100%',
     justifyContent: 'space-between',
-    paddingHorizontal: 60,
+    alignItems: 'center',
+    // alignItems: 'flex-end',
+    // paddingHorizontal: 60,
+    width: 1080,
+    height: 191,
+    backgroundColor: '#2E2E2E',
+  },
+  logo: {
+    paddingLeft: 67,
+    paddingTop: 72,
+    paddingBottom: 59,
   },
   logoText: {
-    fontSize: 35,
-    color: 'white',
-    fontWeight: 'bold',
+    fontSize: 50,
+    color: '#FFF',
+    fontWeight: '700',
+    // fontFamily: 'Pretendard',
+    // lineHeight: 'normal',
   },
   dateView: {
-    alignItems: 'flex-end',
+    paddingTop: 48,
+    paddingRight: 67,
+    paddingBottom: 42,
+    // textAlign: 'right',
   },
   date: {
-    color: 'white',
-    fontSize: 20,
+    color: '#FFFFFF',
+    fontSize: 30,
+    fontWeight: '700',
   },
   time: {
-    color: 'white',
-    fontSize: 20,
+    color: '#FFF',
+    fontSize: 50,
+    fontWeight: '700',
   },
 });
