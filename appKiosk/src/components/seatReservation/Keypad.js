@@ -11,8 +11,7 @@ import {
 import indexStore from '../../stores/IndexStore';
 import {Observer} from 'mobx-react';
 
-const Keypad = ({openTicket}) => {
-  console.log(openTicket);
+const Keypad = ({}) => {
   const keypad = [
     {
       id: 1,
@@ -83,7 +82,13 @@ const Keypad = ({openTicket}) => {
                 },
               ]}
               onPress={() => userNameHandler(item.id)}>
-              <Text>{item.id}</Text>
+              <Text
+                style={[
+                  styles.number,
+                  {fontSize: item.name === 'deleteAll' ? 30 : 50},
+                ]}>
+                {item.id}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>,
@@ -97,6 +102,17 @@ const Keypad = ({openTicket}) => {
   const [clickNumber, setClickNumber] = useState('010');
   const userNameHandler = text => {
     let number = clickNumber;
+    // console.log(number);
+    if (text === '전체지우기') {
+      setClickNumber('010');
+      return;
+    }
+    if (text === '<' && number !== '010') {
+      number = number.slice(0, -1);
+      setClickNumber(number);
+      return;
+    }
+
     number += text;
     setClickNumber(number);
   };
@@ -105,26 +121,28 @@ const Keypad = ({openTicket}) => {
       {() => (
         <View style={styles.container}>
           <Text style={styles.infoText}>회원 번호를 입력해주세요</Text>
+
           <TextInput
             style={styles.userInput}
             onChangeText={userNameHandler}
             value={clickNumber}
           />
+
           <View style={styles.keypad}>{renderKeypadRow()}</View>
           <View style={styles.btn}>
             <TouchableOpacity
               style={[styles.okCancelBtn, {backgroundColor: '#FA6400'}]}
-              onPress={() => seatStore.openUserInfo()}>
+              onPress={() => seatStore.openUserInfo(clickNumber)}>
               <Text style={[styles.btnText, {color: 'white'}]}>확인</Text>
             </TouchableOpacity>
-            <View style={{paddingHorizontal: 10 * width}}></View>
+            <View style={{paddingHorizontal: 10}}></View>
             <TouchableOpacity
               style={[
                 styles.okCancelBtn,
                 {backgroundColor: 'rgba(0, 0, 0, 0.08)'},
               ]}
               onPress={() => footerStore.offReserveBtn()}>
-              <Text style={styles.btnText}>취소</Text>
+              <Text style={[styles.btnText, {color: '#000'}]}>취소</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -142,13 +160,21 @@ const styles = StyleSheet.create({
     paddingTop: 67 * height,
     paddingBottom: 31 * height,
     fontSize: 50 * scale,
+    lineHeight: 59.67,
+    color: '#000000',
+    fontFamily: 'Pretendard',
   },
+
   userInput: {
     backgroundColor: '#eeeeee',
-    width: 500 * width,
-    height: 60 * height,
+    width: 688 * width,
+    height: 120 * height,
+    fontWeight: '700',
     paddingHorizontal: 20 * width,
     paddingVertical: 30 * height,
+    color: '#000000',
+    fontSize: 50 * scale,
+    textAlign: 'center',
   },
   keypad: {
     paddingTop: 31 * height,
@@ -163,15 +189,19 @@ const styles = StyleSheet.create({
     marginBottom: 10, // 행 사이의 간격 조절
   },
   keypadBtn: {
-    width: 180 * width,
-    height: 75 * height,
-    // paddingHorizontal: 30 * width,
-    // paddingVertical: 20 * height,
+    width: 220 * width,
+    height: 135 * height,
+    paddingHorizontal: 20 * width,
+    paddingVertical: 30 * height,
 
-    borderRadius: 20 * width,
-    marginHorizontal: 5 * width, // 버튼 사이의 간격 조절
+    borderRadius: 20,
+    marginHorizontal: 5, // 버튼 사이의 간격 조절
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  number: {
+    fontSize: 50 * scale,
+    color: '#000000',
   },
   btn: {
     flexDirection: 'row',
@@ -181,12 +211,12 @@ const styles = StyleSheet.create({
     height: 120 * height,
     paddingHorizontal: 10 * width,
     paddingVertical: 10 * height,
-    borderRadius: 20 * width,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
   btnText: {
-    fontSize: 30 * scale,
+    fontSize: 50 * scale,
   },
 });
 

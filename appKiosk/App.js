@@ -22,8 +22,9 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: 1080,
-    height: 1920,
+    // width: 1080,
+    // height: 1920,
+    backgroundColor: 'white',
   },
 });
 

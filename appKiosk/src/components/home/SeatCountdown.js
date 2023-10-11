@@ -62,6 +62,7 @@ const Countdown = ({seatData}) => {
 const styles = StyleSheet.create({
   remainingTimeText: {
     fontSize: 20,
+    color: '#000',
   },
 });
 

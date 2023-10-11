@@ -14,6 +14,7 @@ import {Observer} from 'mobx-react';
 import produce from 'immer';
 import Keypad from './Keypad';
 import {height, scale, width} from '../../config/globalStyles';
+import {action, runInAction} from 'mobx';
 
 const Subscribe = props => {
   const [userName, setUserName] = useState('');
@@ -21,14 +22,17 @@ const Subscribe = props => {
   // const [openTicket, setOpenTicket] = useState(false);
   const {footerStore, seatStore, ticketStore} = indexStore();
   const {selectedSeatData, selectedSeatIndex} = props;
-
+  const [isSelected, setIsSelected] = useState(false);
   const {tickets} = ticketStore;
   const {openTicket} = seatStore;
   // console.log(tickets);
   // console.log(JSON.stringify(selectedSeatData) + '번 타석 선택');
+  console.log(selectedSeatData);
   const offReserveBtn = () => {
     footerStore.offReserveBtn();
-    seatStore.openTicket = false;
+    runInAction(() => {
+      seatStore.openTicket = false;
+    });
     console.log('modal off');
   };
   const [selectedTicketIndex, setSelectedTicketIndex] = useState(-1);
@@ -45,7 +49,7 @@ const Subscribe = props => {
   const reserveHandler = selectedTicketIndex => {
     // console.log(`${selectedSeatData.station_num}번 타석 예약이 되었습니다.`);
     // console.log(`${item[selectedItemIndex].name} 이용권 확정`);
-    console.log(selectedSeatData);
+    selectedSeatData;
     props.resetSelectedSeatIndex();
     seatStore.seatUpdate(
       selectedSeatData.status,
@@ -55,7 +59,9 @@ const Subscribe = props => {
     );
     // console.log(item[selectedItemIndex].name + '초 이용권 선택');
     footerStore.offBtn();
-    seatStore.openTicket = false;
+    runInAction(() => {
+      seatStore.openTicket = false;
+    });
     setUserName('');
   };
 
@@ -67,6 +73,7 @@ const Subscribe = props => {
     console.log('non user btn click');
     setSelectedUser(curr => false);
   };
+
   return (
     <Observer>
       {() => (
@@ -79,10 +86,14 @@ const Subscribe = props => {
               offReserveBtn();
             }}>
             <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                {!seatStore.openTicket ? (
-                  <Keypad />
-                ) : (
+              <View
+                style={[
+                  styles.modalView,
+                  {
+                    height: seatStore.openTicket ? height * 792 : 1097 * height,
+                  },
+                ]}>
+                {seatStore.openTicket ? (
                   <>
                     <View style={styles.seatNum}>
                       <Text style={styles.seatNumText}>
@@ -107,6 +118,8 @@ const Subscribe = props => {
                                 selectedTicketIndex === index
                                   ? '#ffe0cc'
                                   : '#eeeeee',
+                              marginRight:
+                                index !== tickets.length - 1 ? 49.59 : 0,
                             },
                           ]}
                           onPress={() => ticketHandler(index)}>
@@ -114,35 +127,47 @@ const Subscribe = props => {
                         </TouchableOpacity>
                       ))}
                     </View>
-                    <View style={styles.btn}>
-                      <Pressable
-                        style={[
-                          styles.button,
-                          styles.buttonClose,
-                          {backgroundColor: '#fa6402'},
-                        ]}
-                        onPress={() => {
-                          reserveHandler(selectedTicketIndex);
-                          footerStore.offReserveBtn();
-                        }}>
-                        <Text style={[styles.textStyle, {color: 'white'}]}>
-                          사용
-                        </Text>
-                      </Pressable>
-                      <View style={{paddingHorizontal: 10}}></View>
-                      <Pressable
-                        style={[
-                          styles.button,
-                          styles.buttonClose,
-                          {backgroundColor: 'darkgrey'},
-                        ]}
-                        onPress={() => offReserveBtn()}>
-                        <Text style={[styles.textStyle, {color: 'black'}]}>
-                          취소
-                        </Text>
-                      </Pressable>
-                    </View>
+                    {selectedTicketIndex === -1 ? (
+                      <View style={{paddingTop: 104 * height}}>
+                        <TouchableOpacity
+                          style={styles.cancelBtn}
+                          onPress={() => offReserveBtn()}>
+                          <Text style={styles.cancelText}>취소</Text>
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      <View style={styles.btn}>
+                        <Pressable
+                          style={[
+                            styles.button,
+                            styles.buttonClose,
+                            {backgroundColor: '#fa6402'},
+                          ]}
+                          onPress={() => {
+                            reserveHandler(selectedTicketIndex);
+                            footerStore.offReserveBtn();
+                          }}>
+                          <Text style={[styles.textStyle, {color: 'white'}]}>
+                            사용
+                          </Text>
+                        </Pressable>
+                        <View style={{paddingHorizontal: 28}}></View>
+                        <Pressable
+                          style={[
+                            styles.button,
+                            styles.buttonClose,
+                            {backgroundColor: 'darkgrey'},
+                          ]}
+                          onPress={() => offReserveBtn()}>
+                          <Text style={[styles.textStyle, {color: 'black'}]}>
+                            취소
+                          </Text>
+                        </Pressable>
+                      </View>
+                    )}
                   </>
+                ) : (
+                  <Keypad />
                 )}
               </View>
             </View>
@@ -176,10 +201,12 @@ const styles = StyleSheet.create({
   seatNum: {
     paddingTop: 84 * height,
     alignItems: 'center',
+    color: '#000',
   },
   seatNumText: {
     fontSize: 70 * scale,
     fontWeight: '500',
+    color: '#000000',
   },
   selectSeatUseTime: {
     color: '#000000',
@@ -189,7 +216,7 @@ const styles = StyleSheet.create({
   },
   ticket: {
     flexDirection: 'row',
-    // paddingTop: 34 * height,
+    paddingTop: 34 * height,
     paddingHorizontal: 14.133 * width,
     paddingVertical: 14.133 * height,
   },
@@ -198,8 +225,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#eeeeee',
     paddingVertical: 30 * height,
     paddingHorizontal: 30 * width,
-    borderRadius: 5,
-    margin: 10,
+    borderRadius: 24.795,
     width: 212 * width,
     height: 212 * height,
     justifyContent: 'center',
@@ -207,10 +233,12 @@ const styles = StyleSheet.create({
   },
   ticketTime: {
     fontSize: 70.667 * scale,
+    color: '#000',
     // textAlign: 'center',
   },
   btn: {
     flexDirection: 'row',
+    paddingTop: 104 * height,
   },
   button: {
     width: 340 * width,
@@ -223,6 +251,7 @@ const styles = StyleSheet.create({
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 50,
   },
   modalText: {
     marginBottom: 15,
@@ -259,6 +288,18 @@ const styles = StyleSheet.create({
   },
   nonUserText: {
     fontSize: 20,
+  },
+  cancelBtn: {
+    width: 735 * width,
+    height: 120 * height,
+
+    backgroundColor: 'rgba(0, 0, 0, 0.25);',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cancelText: {
+    fontSize: 50 * scale,
+    color: '#000',
   },
 });
 export default Subscribe;

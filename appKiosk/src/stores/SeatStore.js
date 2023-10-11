@@ -1,4 +1,4 @@
-import {observable, toJS} from 'mobx';
+import {observable, action, toJS, runInAction} from 'mobx';
 import {produce} from 'immer';
 
 // emptyseat : 빈타석
@@ -6,6 +6,8 @@ import {produce} from 'immer';
 // notempty: 이용불가
 
 const SeatStore = observable({
+  reservationList: [],
+  userInfo: '',
   seatDataList: {
     area_info: {
       key: 174745,
@@ -162,7 +164,7 @@ const SeatStore = observable({
 
       {
         key: 174746,
-        station_name: 'station_6',
+        station_name: 'station_1',
         x_coordinate: 47,
         y_coordinate: 97,
         station_width: 137,
@@ -179,12 +181,19 @@ const SeatStore = observable({
   },
 
   openTicket: false,
-  openUserInfo() {
-    this.openTicket = true;
+
+  openUserInfo(clickNumber) {
+    runInAction(() => {
+      this.openTicket = true;
+      this.userInfo = clickNumber;
+    });
   },
+
   closeUserInfoBtn() {
     // 여기서 회원 조회를 한 이후에 true면 넘기기, 아니면 false
-    this.openTicket = false;
+    runInAction(() => {
+      this.openTicket = false;
+    });
   },
 
   seatUpdate(seatStatus, key, use_time, userName) {
@@ -196,16 +205,17 @@ const SeatStore = observable({
             data.use_time += use_time;
             data.status = 'used';
             data.user.push(userName);
+            this.reservationList.push(data, this.userInfo);
           }
         });
       },
-      console.log(this.seatDataList['station_info_list']),
     );
     // console.log(this.seatDataList['station_info_list']);
+    console.log(this.reservationList);
   },
 
   seatDataSetting(seatData) {
-    console.log(seatData);
+    // console.log(seatData);
     this.seatDataList['station_info_list'] = produce(
       toJS(this.seatDataList['station_info_list']),
       draft => {
@@ -217,15 +227,24 @@ const SeatStore = observable({
         });
       },
     );
+    // reservationList에서 예약자 삭제하기
+    this.reservationList = produce(toJS(this.reservationList), draft => {
+      for (let i = 0; i < draft.length; i++) {
+        if (draft[i].key === seatData.key) {
+          draft.slice(i, 1);
+        }
+      }
+    });
+    console.log(this.reservationList);
   },
 
-  seatChange(seatData, use_time) {
-    this.seatDataList = produce(toJS(this.seatDataList), draft => {
-      draft.station_info_list[seatData.station_num - 1].use_time = 0;
-      draft.station_info_list[seatData.station_num - 1].status = 'emptySeat';
-    });
-    console.log(this.seatDataList['station_info_list']);
-  },
+  // seatChange(seatData, use_time) {
+  //   this.seatDataList = produce(toJS(this.seatDataList), draft => {
+  //     draft.station_info_list[seatData.station_num - 1].use_time = 0;
+  //     draft.station_info_list[seatData.station_num - 1].status = 'emptySeat';
+  //   });
+  //   console.log(this.seatDataList['station_info_list']);
+  // },
 });
 
 export default SeatStore;

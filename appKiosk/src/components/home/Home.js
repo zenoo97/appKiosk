@@ -47,7 +47,7 @@ const Main = ({seatStore, footerStore}) => {
       footerStore.onBtn();
       // 클릭 시
     }
-    console.log(selectedSeatData);
+    // console.log(selectedSeatData);
 
     // 클릭 시 실행
   };
