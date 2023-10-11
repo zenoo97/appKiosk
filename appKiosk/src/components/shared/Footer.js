@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Observer} from 'mobx-react';
-import {height, scale} from '../../config/globalStyles';
+import {height, scale, width} from '../../config/globalStyles';
 const Footer = ({footerStore}) => {
   const reserveBtnHandler = () => {
     footerStore.onReserveBtn();
@@ -57,9 +57,10 @@ const Footer = ({footerStore}) => {
 // '#dedede',#fd6b00
 const styles = StyleSheet.create({
   container: {
-    width: 1080,
+    width: 1080 * width,
     height: 150 * height,
-    padding: 10,
+    paddingVertical: 10 * height,
+    paddingHorizontal: 10 * width,
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,

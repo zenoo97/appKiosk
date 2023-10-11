@@ -126,7 +126,7 @@ const Subscribe = props => {
                           footerStore.offReserveBtn();
                         }}>
                         <Text style={[styles.textStyle, {color: 'white'}]}>
-                          예약
+                          사용
                         </Text>
                       </Pressable>
                       <View style={{paddingHorizontal: 10}}></View>
@@ -138,7 +138,7 @@ const Subscribe = props => {
                         ]}
                         onPress={() => offReserveBtn()}>
                         <Text style={[styles.textStyle, {color: 'black'}]}>
-                          닫기
+                          취소
                         </Text>
                       </Pressable>
                     </View>
@@ -167,11 +167,10 @@ const styles = StyleSheet.create({
 
   modalView: {
     // margin: 20,
-
     backgroundColor: 'white',
     borderRadius: 20,
-    width: 750 * width,
-    height: 866 * height,
+    width: 866 * width,
+    height: 792 * height,
     alignItems: 'center',
   },
   seatNum: {
@@ -186,6 +185,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 40 * scale,
     fontWeight: '400',
+    paddingTop: 22 * height,
   },
   ticket: {
     flexDirection: 'row',
@@ -196,7 +196,8 @@ const styles = StyleSheet.create({
   tickets: {
     // borderWidth: 1,
     backgroundColor: '#eeeeee',
-    padding: 30,
+    paddingVertical: 30 * height,
+    paddingHorizontal: 30 * width,
     borderRadius: 5,
     margin: 10,
     width: 212 * width,
@@ -212,9 +213,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
+    width: 340 * width,
+    height: 120 * height,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20 * width,
   },
 
   textStyle: {

@@ -22,7 +22,7 @@ const StatusBar = () => {
     return (
       <View style={styles.container}>
         <View style={[styles.statusIcon, {backgroundColor}]}></View>
-        <View style={{paddingRight: 19.94}}></View>
+        <View style={{paddingRight: 19.94 * width}}></View>
         <Text style={styles.statusText}>{statusName}</Text>
       </View>
     );

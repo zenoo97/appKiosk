@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // backgroundColor: 'green',
     width: 1080 * width,
-    height: 1920 * height,
+    height: 1572 * height,
     // backgroundColor: '#EEE',
   },
 

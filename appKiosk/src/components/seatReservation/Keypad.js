@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  useWindowDimensions,
 } from 'react-native';
 import indexStore from '../../stores/IndexStore';
 import {Observer} from 'mobx-react';
@@ -81,7 +82,7 @@ const Keypad = ({openTicket}) => {
                       : '#FFE8D9',
                 },
               ]}
-              onPress={userNameHandler}>
+              onPress={() => userNameHandler(item.id)}>
               <Text>{item.id}</Text>
             </TouchableOpacity>
           ))}
@@ -93,9 +94,11 @@ const Keypad = ({openTicket}) => {
   const {seatStore, footerStore} = indexStore();
   const {reserveBtn, offReserveBtn} = footerStore;
   const {closeUserBtn} = seatStore;
-  const [number, setNumber] = useState('010');
+  const [clickNumber, setClickNumber] = useState('010');
   const userNameHandler = text => {
-    setNumber(curr => curr + text);
+    let number = clickNumber;
+    number += text;
+    setClickNumber(number);
   };
   return (
     <Observer>
@@ -105,7 +108,7 @@ const Keypad = ({openTicket}) => {
           <TextInput
             style={styles.userInput}
             onChangeText={userNameHandler}
-            value={number}
+            value={clickNumber}
           />
           <View style={styles.keypad}>{renderKeypadRow()}</View>
           <View style={styles.btn}>
@@ -142,8 +145,10 @@ const styles = StyleSheet.create({
   },
   userInput: {
     backgroundColor: '#eeeeee',
-    width: 380 * width,
+    width: 500 * width,
     height: 60 * height,
+    paddingHorizontal: 20 * width,
+    paddingVertical: 30 * height,
   },
   keypad: {
     paddingTop: 31 * height,
@@ -158,13 +163,13 @@ const styles = StyleSheet.create({
     marginBottom: 10, // 행 사이의 간격 조절
   },
   keypadBtn: {
-    width: 120 * width,
+    width: 180 * width,
     height: 75 * height,
-    paddingHorizontal: 30 * width,
-    paddingVertical: 20 * height,
+    // paddingHorizontal: 30 * width,
+    // paddingVertical: 20 * height,
 
-    borderRadius: 20,
-    marginHorizontal: 5, // 버튼 사이의 간격 조절
+    borderRadius: 20 * width,
+    marginHorizontal: 5 * width, // 버튼 사이의 간격 조절
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -172,10 +177,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   okCancelBtn: {
-    width: 175 * width,
-    height: 80 * height,
-    padding: 10,
-    borderRadius: 20,
+    width: 330 * width,
+    height: 120 * height,
+    paddingHorizontal: 10 * width,
+    paddingVertical: 10 * height,
+    borderRadius: 20 * width,
     justifyContent: 'center',
     alignItems: 'center',
   },
